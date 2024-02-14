@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
-import Catalog from "./pages/Catalog";
+import Layout from "./components/layouts";
 
 function App() {
   return (
-    <div className="App">
-      <Catalog />
-    </div>
+    <>
+      <Layout></Layout>
+    </>
   );
 }
 
