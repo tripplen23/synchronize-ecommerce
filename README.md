@@ -8,7 +8,7 @@ This repository for the Frontend project to build an e-commerce website.
 
 The Front end project must use TypeScript and Redux toolkit.
 
-1. Use the API endpoint `https://fakeapi.platzi.com/`.
+1. Use the API endpoint `https://fakestoreapi.com/`.
 
 2. Create at lease 4 pages (can be more if you want): Page for all products, product page, profile page (only available if user logins), and cart page (cart page could be a page or a modal)
 
