@@ -1,12 +1,12 @@
-import React from "react";
+import * as React from "react";
 import "./App.css";
 import Layout from "./components/layouts";
 
 function App() {
   return (
-    <>
+    <div>
       <Layout></Layout>
-    </>
+    </div>
   );
 }
 
