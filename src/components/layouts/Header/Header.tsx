@@ -1,13 +1,13 @@
-import { NavLink, Link, useRoutes } from "react-router-dom";
-import { RiUserLine } from "react-icons/ri";
+import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LogoComponent from "../../reusable/LogoComponent/LogoComponent";
 import { motion } from "framer-motion";
 import { MoonIcon, SunIcon } from "../../reusable/IconComponent/IconComponent";
 import useThemeSwitcher from "../../../hooks/useThemeSwitcher";
 import { IoMdLogIn } from "react-icons/io";
-import { FaOpencart } from "react-icons/fa";
+
 import { SiSuperuser } from "react-icons/si";
+import CartIcon from "./CartIcon/CartIcon";
 
 interface HeaderProps {
   handleShow: () => void;
@@ -35,10 +35,41 @@ const CustomLink = ({
 };
 
 const Header: React.FC<HeaderProps> = ({ handleShow }) => {
+  const [hasScrolled, setHasSrolled] = useState(false);
+
+  // TODO: Scroll effect
+  const resizeHeaderOnScroll = () => {
+    setHasSrolled((hasScrolled) => {
+      if (
+        !hasScrolled &&
+        (document.body.scrollTop > 20 ||
+          document.documentElement.scrollTop > 20)
+      ) {
+        return true;
+      }
+
+      if (
+        hasScrolled &&
+        document.body.scrollTop < 4 &&
+        document.documentElement.scrollTop < 4
+      ) {
+        return false;
+      }
+
+      return hasScrolled;
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", resizeHeaderOnScroll);
+
+    return () => window.removeEventListener("scroll", resizeHeaderOnScroll);
+  }, []);
+
   const [mode, setMode] = useThemeSwitcher();
 
   return (
-    <header className="w-full px-32 py-8 font-medium flex item-center justify-between dark:text-light">
+    <header className=" w-full px-32 py-8 font-medium flex item-center justify-between dark:text-light">
       {/* link */}
       <nav>
         <CustomLink to="/catalog" title="All" className="mr-4" />
@@ -61,14 +92,13 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
 
       {/* Features */}
       <nav className="flex items-center justify-center flex-wrap mr-10">
-        <motion.a
-          href="/cart"
+        <motion.div
           whileHover={{ y: -2 }}
           whileTap={{ scale: 0.9 }}
           className="w-6 mx-3"
         >
-          <FaOpencart />
-        </motion.a>
+          <CartIcon />
+        </motion.div>
         <motion.a
           href="/login"
           whileHover={{ y: -2 }}

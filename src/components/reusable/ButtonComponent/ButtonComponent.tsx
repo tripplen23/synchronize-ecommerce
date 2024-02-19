@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "./index.module.scss";
 
 interface ButtonComponentProps {
   children: React.ReactNode;
@@ -21,11 +20,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({
 }) => {
   if (to) {
     return (
-      <Link
-        to={to}
-        className={`${styles.button} ${className}`}
-        onClick={onClick}
-      >
+      <Link to={to} className={`${className}`} onClick={onClick}>
         {children}
       </Link>
     );
@@ -34,7 +29,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({
   return (
     <button
       type={type}
-      className={`${styles.button} ${className}`}
+      className={`${className}`}
       onClick={onClick}
       disabled={disabled}
     >

@@ -7,6 +7,7 @@ module.exports = withMT({
   theme: {
     extend: {
       fontFamily: {
+        orbitron: ["Orbitron", "cursive"],
         kaushan: ["KaushanScript", "cursive"],
         sirin: ["SirinStencil", "cursive"],
       },
