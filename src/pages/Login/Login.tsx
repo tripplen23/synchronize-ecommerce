@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../redux/utils/hooks";
-import { getUser, login, logout } from "../../redux/features/auth/authSlice";
+import { getUser, login } from "../../redux/features/auth/authSlice";
 
 const Login = () => {
   const { user, token, isLoading } = useAppSelector((state) => state.auth);

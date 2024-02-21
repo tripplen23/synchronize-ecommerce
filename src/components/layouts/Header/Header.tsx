@@ -5,9 +5,13 @@ import { motion } from "framer-motion";
 import { MoonIcon, SunIcon } from "../../reusable/IconComponent/IconComponent";
 import useThemeSwitcher from "../../../hooks/useThemeSwitcher";
 import { IoMdLogIn } from "react-icons/io";
+import { MdLogout } from "react-icons/md";
+import { useNavigate } from "react-router";
 
 import { SiSuperuser } from "react-icons/si";
 import CartIcon from "./CartIcon/CartIcon";
+import { useAppDispatch, useAppSelector } from "../../../redux/utils/hooks";
+import { logout } from "../../../redux/features/auth/authSlice";
 
 interface HeaderProps {
   handleShow: () => void;
@@ -35,38 +39,28 @@ const CustomLink = ({
 };
 
 const Header: React.FC<HeaderProps> = ({ handleShow }) => {
-  const [hasScrolled, setHasSrolled] = useState(false);
-
-  // TODO: Scroll effect
-  const resizeHeaderOnScroll = () => {
-    setHasSrolled((hasScrolled) => {
-      if (
-        !hasScrolled &&
-        (document.body.scrollTop > 20 ||
-          document.documentElement.scrollTop > 20)
-      ) {
-        return true;
-      }
-
-      if (
-        hasScrolled &&
-        document.body.scrollTop < 4 &&
-        document.documentElement.scrollTop < 4
-      ) {
-        return false;
-      }
-
-      return hasScrolled;
-    });
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", resizeHeaderOnScroll);
-
-    return () => window.removeEventListener("scroll", resizeHeaderOnScroll);
-  }, []);
-
+  // TODO: Switch theme mode
   const [mode, setMode] = useThemeSwitcher();
+
+  // TODO: Authentication
+  const { user, token } = useAppSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+  // Check if user details are present in local storage
+  useEffect(() => {
+    const userDetails = localStorage.getItem("userDetails");
+    if (userDetails) {
+      setIsAuthenticated(true);
+    }
+  }, [user, token]);
+
+  const logoutHandler = async () => {
+    await dispatch(logout());
+    setIsAuthenticated(false);
+    navigate("/");
+  };
 
   return (
     <header className="font-kaushan w-full px-32 py-8 font-medium flex item-center justify-between dark:text-light">
@@ -99,23 +93,40 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
         >
           <CartIcon />
         </motion.div>
-        <motion.a
-          href="/login"
-          whileHover={{ y: -2 }}
-          whileTap={{ scale: 0.9 }}
-          className="w-6 mx-3"
-        >
-          <IoMdLogIn />
-        </motion.a>
+        {/* If user is in the local storage, logout will be shown otherwise login and User*/}
+        {isAuthenticated === true ? (
+          <div className="flex">
+            <motion.a
+              href="/user"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.9 }}
+              className="w-6 mx-3"
+            >
+              <SiSuperuser />
+            </motion.a>
+            <motion.button
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.9 }}
+              className="w-6 mx-3"
+              onClick={() => logoutHandler()}
+            >
+              <MdLogout />
+            </motion.button>
+          </div>
+        ) : (
+          <div className="flex">
+            {" "}
+            <motion.a
+              href="/login"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.9 }}
+              className="w-6 mx-3"
+            >
+              <IoMdLogIn />
+            </motion.a>
+          </div>
+        )}
 
-        <motion.a
-          href="/user"
-          whileHover={{ y: -2 }}
-          whileTap={{ scale: 0.9 }}
-          className="w-6 mx-3"
-        >
-          <SiSuperuser />
-        </motion.a>
         <button
           onClick={() => setMode(mode === "light" ? "dark" : "light")}
           className={`ml-3 flex items-center justify-center rounded-full p-1 ${
