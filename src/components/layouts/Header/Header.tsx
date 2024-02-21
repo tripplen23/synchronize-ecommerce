@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
   const [mode, setMode] = useThemeSwitcher();
 
   return (
-    <header className=" w-full px-32 py-8 font-medium flex item-center justify-between dark:text-light">
+    <header className="font-kaushan w-full px-32 py-8 font-medium flex item-center justify-between dark:text-light">
       {/* link */}
       <nav>
         <CustomLink to="/catalog" title="All" className="mr-4" />

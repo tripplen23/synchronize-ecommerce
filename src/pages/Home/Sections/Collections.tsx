@@ -12,7 +12,7 @@ const Collections = () => {
           <div>
             {collectionImages.map((item, id) => {
               return (
-                <Link to={item.link}>
+                <Link key={id} to={item.link}>
                   <img srcSet={item.path} alt="" loading="lazy" />
                   <motion.div
                     key="cart"

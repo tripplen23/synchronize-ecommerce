@@ -2,6 +2,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { LoginType, UserDetailsType } from "../../../misc/authType";
 import authService from "./authService";
 import { STATUS } from "../../../constants/Status";
+import axios from "axios";
 
 interface AuthState {
   user: UserDetailsType | null;
@@ -28,12 +29,22 @@ export const login = createAsyncThunk(
   "auth/login",
   async (user: LoginType, thunkAPI) => {
     try {
+      console.log("Login successfully");
       return await authService.login({
         username: String(user.username),
         password: String(user.password),
       });
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      if (axios.isAxiosError(error)) {
+        return thunkAPI.rejectWithValue({
+          message: error.message,
+          status: error.response?.status,
+        });
+      }
+      return thunkAPI.rejectWithValue({
+        message: "An error occurred",
+        status: 500,
+      });
     }
   }
 );
@@ -59,7 +70,7 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   }
 });
 
-export const authSlice = createSlice({
+const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -147,3 +158,9 @@ export const authSlice = createSlice({
     });
   },
 });
+
+const authReducer = authSlice.reducer;
+
+export const { authReset } = authSlice.actions;
+
+export default authReducer;

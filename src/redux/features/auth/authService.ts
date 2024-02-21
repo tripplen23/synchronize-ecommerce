@@ -5,7 +5,7 @@ import { LoginType } from "../../../misc/authType";
 const login = async (userData: LoginType) => {
   const response = await axiosConfig.post("auth/login", userData);
 
-  return response.data;
+  return response.data; // token
 };
 
 // DOCS: User -> Get a single

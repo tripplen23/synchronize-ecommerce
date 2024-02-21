@@ -1,15 +1,15 @@
 import Collections from "./Sections/Collections";
-import HeroSection from "./Sections/HeroSection";
+import Slider from "./Sections/Slider";
 import QuickView from "./Sections/QuickView";
 
 const Home = () => {
   return (
     <>
-      <>
-        <HeroSection />
+      <div>
+        <Slider />
         <QuickView />
         <Collections />
-      </>
+      </div>
     </>
   );
 };

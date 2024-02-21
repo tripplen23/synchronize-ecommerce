@@ -17,7 +17,7 @@ const Layout = () => {
   };
   return (
     <div>
-      <div className="font-kaushan bg-light w-full min-h-screen dark:bg-dark">
+      <div className=" bg-light w-full min-h-screen dark:bg-dark">
         <Header handleShow={handleShow} />
         <main className="dark:text-light light:text-dark">
           <Outlet />

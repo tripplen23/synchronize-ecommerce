@@ -18,9 +18,16 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({
   onClick,
   disabled,
 }) => {
+  const baseStyles =
+    "transition duration-300 ease-in-out transform hover:scale-110";
+
   if (to) {
     return (
-      <Link to={to} className={`${className}`} onClick={onClick}>
+      <Link
+        to={to}
+        className={`dark:bg-gray-800 bg-dark text-light font-semibold px-4 py-2 rounded-full ${baseStyles} ${className}`}
+        onClick={onClick}
+      >
         {children}
       </Link>
     );
@@ -29,7 +36,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({
   return (
     <button
       type={type}
-      className={`${className}`}
+      className={`dark:bg-gray-800 bg-dark text-white font-semibold px-4 py-2 rounded-full ${baseStyles} ${className}`}
       onClick={onClick}
       disabled={disabled}
     >
