@@ -97,7 +97,7 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
         {isAuthenticated === true ? (
           <div className="flex">
             <motion.a
-              href="/user"
+              href="/admin"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.9 }}
               className="w-6 mx-3"

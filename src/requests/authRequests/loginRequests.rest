@@ -1,0 +1,8 @@
+### login a registered user
+POST https://fakestoreapi.com/auth/login
+Content-type: application/json
+
+{
+  username: "mor_2314",
+  password: "83r5^_"
+}

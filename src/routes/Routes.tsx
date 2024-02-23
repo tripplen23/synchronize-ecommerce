@@ -1,6 +1,6 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import { Cart, Catalog, Home, Product, User } from "../pages";
+import { Cart, Catalog, Home, Product, AdminDashboard } from "../pages";
 import LoginPage from "../pages/Login/Login";
 
 export const router = createBrowserRouter([
@@ -14,22 +14,22 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
 
-      // Login -> User
+      // Login -> Admin
       {
         path: "login",
         element: <LoginPage />,
         children: [
           {
-            path: "user",
-            element: <User />,
+            path: "admin",
+            element: <AdminDashboard />,
           },
         ],
       },
 
-      // User
+      // Admin
       {
-        path: "user",
-        element: <User />,
+        path: "admin",
+        element: <AdminDashboard />,
       },
 
       // Catalog
