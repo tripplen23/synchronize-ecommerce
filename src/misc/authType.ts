@@ -1,13 +1,20 @@
 export interface UserDetailsType {
-
+  email: string;
+  username?: string;
+  password?: string;
   name: {
     firstname: string;
     lastname: string;
   };
-  email: string;
+
   address: {
     city: string;
     number: string;
+    zipcode: string;
+    geolocation?: {
+      lat?: string;
+      long?: string;
+    };
   };
   phone?: string;
 }

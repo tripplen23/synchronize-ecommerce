@@ -10,6 +10,17 @@ import productReducer, {
   updateProduct,
 } from "./productSlice";
 
+import { productMSW } from "../../../shared/productMSW";
+import { mockProducts } from "../../../data/mockProducts";
+
+beforeAll(() => {
+  productMSW.listen();
+});
+
+afterAll(() => {
+  productMSW.close();
+});
+
 const initialState = {
   products: [],
   product: {
@@ -25,34 +36,6 @@ const initialState = {
   error: null,
   status: "",
 };
-
-// mock data
-let mockProducts: ProductType[] = [
-  {
-    id: 1,
-    title: "product1",
-    price: 1,
-    description: "product1 desc",
-    category: "men",
-    image: "menimg.png",
-  },
-  {
-    id: 2,
-    title: "product2",
-    price: 2,
-    description: "product2 desc",
-    category: "women",
-    image: "womenimg.png",
-  },
-  {
-    id: 3,
-    title: "product3",
-    price: 3,
-    description: "product3 desc",
-    category: "electronics",
-    image: "electronicsimg.png",
-  },
-];
 
 // TODO: TESTING getProducts
 describe("Get all products", () => {
@@ -82,12 +65,17 @@ describe("Get all products", () => {
 
     expect(state.products).toBeDefined();
     expect(state.products[0]).toEqual({
-      category: "men",
-      description: "product1 desc",
+      category: "men's clothing",
+      description:
+        "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
       id: 1,
-      image: "menimg.png",
-      price: 1,
-      title: "product1",
+      image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+      price: 109.95,
+      rating: {
+        count: 120,
+        rate: 3.9,
+      },
+      title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
     });
     expect(state).toEqual({
       ...initialState,
@@ -120,11 +108,20 @@ describe("Get all products", () => {
 });
 
 // TODO: TESTING getProductById
+describe("Get product by id", () => {
+  it("Should return a specific product", async () => {
+    const productId: number = 3;
+    const result = await store.dispatch(getProductById(productId));
+    expect(result.payload.title).toEqual("Mens Cotton Jacket");
+    expect(store.getState().product.isSuccess).toBeTruthy();
+    expect(store.getState().product.status.toLowerCase()).toEqual("success");
+  });
+});
 
 // TODO: TESTING getCategory
 
 // TODO: TESTING addNewProduct
-describe("Add a new product", () => {
+describe("Add a new product(fulfilled)", () => {
   test("Should create a new product", async () => {
     const createdProduct: ModifiedProductType = {
       title: "Dreamless Drugs",
@@ -135,7 +132,43 @@ describe("Add a new product", () => {
     };
     await store.dispatch(addNewProduct(createdProduct));
     expect(store.getState().product.products.length).toBe(21);
+    expect(store.getState().product.error).toBeNull();
   });
 });
 // TODO: TESTING deleteProduct
+describe("delete a product (fulfilled)", () => {
+  test("Should delete a product", async () => {
+    const productId: number = 1;
+    await store.dispatch(deleteProduct(productId));
+    expect(store.getState().product.products.length).toBe(20);
+    expect(
+      store.getState().product.products.map((product) => product.id)
+    ).not.toContain(productId);
+    expect(
+      store.getState().product.products.map((product) => product.title)
+    ).not.toContain("Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops");
+  });
+});
 // TODO: TESTING updateProduct
+describe("update a product (fulfilled)", () => {
+  it("Should update a product", async () => {
+    const productId: number = 3;
+    const productData: ModifiedProductType = {
+      title: "In the night",
+      price: 500,
+      description: "Merchandise",
+      category: "men's clothing",
+      image: "dd.png",
+    };
+    // Dispatch the updateProduct action
+
+    await store.dispatch(updateProduct({ productId, productData }));
+    expect(store.getState().product.products.length).toBe(20);
+
+    const updatedProduct = store
+      .getState()
+      .product.products.find((product) => product.id === productId);
+
+    expect(updatedProduct?.title).toBe(productData.title);
+  });
+});

@@ -8,14 +8,7 @@ export interface ProductType {
   rating?: Rating;
 }
 
-export interface ModifiedProductType {
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating?: Rating;
-}
+export type ModifiedProductType = Omit<ProductType, "id">;
 
 export interface Rating {
   rate: number;
