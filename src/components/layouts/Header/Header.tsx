@@ -50,8 +50,9 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
 
   // Check if user details are present in local storage
   useEffect(() => {
-    const userDetails = localStorage.getItem("userDetails");
-    if (userDetails) {
+    const loginToken = localStorage.getItem("loginToken");
+
+    if (loginToken) {
       setIsAuthenticated(true);
     }
   }, [user, token]);

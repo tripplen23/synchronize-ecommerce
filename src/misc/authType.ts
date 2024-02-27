@@ -1,4 +1,5 @@
 export interface UserDetailsType {
+  id?: number;
   email: string;
   username?: string;
   password?: string;
@@ -7,7 +8,7 @@ export interface UserDetailsType {
     lastname: string;
   };
 
-  address: {
+  address?: {
     city: string;
     number: string;
     zipcode: string;

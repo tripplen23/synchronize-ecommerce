@@ -4,7 +4,7 @@ import authService from "./authService";
 import { STATUS } from "../../../constants/Status";
 import axios from "axios";
 
-interface AuthState {
+export interface AuthState {
   user: UserDetailsType | null;
   userId: 0;
   token: string;
@@ -14,7 +14,7 @@ interface AuthState {
   status: string;
 }
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
   user: null,
   userId: 0,
   token: "",
@@ -64,6 +64,7 @@ export const getUser = createAsyncThunk(
 // TODO: Logout
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
+    console.log("Log out successfully!");
     return await authService.logout();
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -88,7 +89,8 @@ const authSlice = createSlice({
     builder.addCase(
       login.fulfilled,
       (state: AuthState, action: PayloadAction<string>) => {
-        localStorage.setItem("user", JSON.stringify(2));
+        console.log("Login action payload", action.payload);
+        localStorage.setItem("loginToken", JSON.stringify(action.payload));
         return {
           ...state,
           isLoading: false,
@@ -119,6 +121,10 @@ const authSlice = createSlice({
       getUser.fulfilled,
       (state: AuthState, action: PayloadAction<UserDetailsType>) => {
         localStorage.setItem("userDetails", JSON.stringify(action.payload));
+        console.log(
+          "user's first name:",
+          JSON.stringify(action.payload?.name.firstname)
+        );
         return {
           ...state,
           isLoading: false,

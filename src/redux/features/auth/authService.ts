@@ -4,6 +4,11 @@ import { LoginType } from "../../../misc/authType";
 // DOCS: Login -> User login
 const login = async (userData: LoginType) => {
   const response = await axiosConfig.post("auth/login", userData);
+  console.log("login response data: ", response.data);
+
+  if (response.data) {
+    localStorage.setItem("userIdDemo", JSON.stringify(1));
+  }
 
   return response.data; // token
 };
@@ -11,6 +16,7 @@ const login = async (userData: LoginType) => {
 // DOCS: User -> Get a single
 const getUser = async (userId: number) => {
   const response = await axiosConfig.get(`users/${userId}`);
+  console.log("getUser response data: ", response.data);
 
   if (response.data) {
     localStorage.setItem("userDetails", JSON.stringify(response.data));
@@ -20,8 +26,9 @@ const getUser = async (userId: number) => {
 };
 
 const logout = () => {
-  localStorage.removeItem("user");
+  localStorage.removeItem("loginToken");
   localStorage.removeItem("userDetails");
+  localStorage.removeItem("userIdDemo");
 };
 
 const authService = {

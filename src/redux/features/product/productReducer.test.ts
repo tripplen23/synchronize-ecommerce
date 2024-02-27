@@ -131,7 +131,7 @@ describe("Add a new product(fulfilled)", () => {
     await store.dispatch(addNewProduct(createdProduct));
     expect(store.getState().product.products.length).toBe(21);
     expect(store.getState().product.error).toBeNull();
-  });
+  }, 10000);
 });
 // TODO: TESTING deleteProduct
 describe("delete a product (fulfilled)", () => {

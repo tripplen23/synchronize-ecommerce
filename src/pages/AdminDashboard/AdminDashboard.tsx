@@ -11,10 +11,11 @@ import AddingModalComponent from "../../components/reusable/ModalComponents/Addi
 import ButtonComponent from "../../components/reusable/ButtonComponent/ButtonComponent";
 import { Link } from "react-router-dom";
 import SpinnerComponent from "../../components/reusable/SpinnerComponent/SpinnerComponent";
+import { getUser } from "../../redux/features/auth/authSlice";
 
 const AdminDashboard = () => {
   const { products, isLoading } = useAppSelector((state) => state.product);
-
+  const { user, token } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   const itemsPerPage = 10;
@@ -24,6 +25,12 @@ const AdminDashboard = () => {
   // TODO: Fetch product on component mount
   useEffect(() => {
     dispatch(getProducts());
+  }, [dispatch]);
+
+  // TODO: Fetch user information
+  useEffect(() => {
+    const userId: number = Number(localStorage.getItem("userIdDemo"));
+    dispatch(getUser(userId));
   }, [dispatch]);
 
   // TODO: Handler for adding / updating / deleting products
@@ -55,7 +62,14 @@ const AdminDashboard = () => {
       <div className="text-center mb-4">
         <h1 className="text-3xl font-semibold">Admin Dashboard</h1>
         <br />
-        <ButtonComponent to="/admin/profile">Admin profile</ButtonComponent>
+        <div className="profileInfo flex flex-col">
+          <span className="name">
+            Admin Name: {`${user?.name.firstname} ${user?.name.lastname}`}
+          </span>
+          <span className="email">
+            Email: <strong>{user?.email}</strong>
+          </span>
+        </div>
       </div>
 
       <div className="bg-light dark:bg-dark p-8 rounded shadow">

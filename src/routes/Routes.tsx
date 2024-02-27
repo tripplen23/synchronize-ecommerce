@@ -6,7 +6,7 @@ import {
   Home,
   Product,
   AdminDashboard,
-  AdminProfile,
+
   Login,
 } from "../pages";
 
@@ -27,22 +27,10 @@ export const router = createBrowserRouter([
         element: <Login />,
       },
 
-      // Admin
+      // Admin: Should be set as a private route
       {
         path: "admin",
         element: <AdminDashboard />,
-        children: [
-          {
-            path: "profile",
-            element: <AdminProfile />,
-          },
-        ],
-      },
-
-      // Admin profile (Debt)
-      {
-        path: "/admin/profile",
-        element: <AdminProfile />,
       },
 
       // Catalog

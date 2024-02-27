@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../redux/utils/hooks";
 import { getUser, login } from "../../redux/features/auth/authSlice";
+import SpinnerComponent from "../../components/reusable/SpinnerComponent/SpinnerComponent";
 
 const Login = () => {
   const { user, token, isLoading } = useAppSelector((state) => state.auth);
@@ -16,7 +17,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user === null && token) {
-      const userId = localStorage.getItem("user");
+      const userId = localStorage.getItem("userIdDemo");
       dispatch(getUser(Number(userId)));
     }
   }, [token, user, dispatch]);
@@ -42,7 +43,12 @@ const Login = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <SpinnerComponent />
+      </div>
+    );
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -55,7 +61,7 @@ const Login = () => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="username"
           >
-            Username
+            Username (For demo: johnd)
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -75,7 +81,7 @@ const Login = () => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="password"
           >
-            Password
+            Password (For demo: m38rmF$)
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
