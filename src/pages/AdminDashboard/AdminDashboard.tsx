@@ -9,11 +9,14 @@ import {
 import { ModifiedProductType, ProductType } from "../../misc/productType";
 import AddingModalComponent from "../../components/reusable/ModalComponents/AddingModalComponent";
 import ButtonComponent from "../../components/reusable/ButtonComponent/ButtonComponent";
+import { Link } from "react-router-dom";
+import SpinnerComponent from "../../components/reusable/SpinnerComponent/SpinnerComponent";
 
 const AdminDashboard = () => {
-  const products = useAppSelector((state) => state.product.products);
-  const isLoading = useAppSelector((state) => state.product.isLoading);
+  const { products, isLoading } = useAppSelector((state) => state.product);
+
   const dispatch = useAppDispatch();
+
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [isAddingModalOpen, setIsAddingModalOpen] = useState(false);
@@ -52,12 +55,14 @@ const AdminDashboard = () => {
       <div className="text-center mb-4">
         <h1 className="text-3xl font-semibold">Admin Dashboard</h1>
         <br />
-        <ButtonComponent>Admin profile</ButtonComponent>
+        <ButtonComponent to="/admin/profile">Admin profile</ButtonComponent>
       </div>
 
       <div className="bg-light dark:bg-dark p-8 rounded shadow">
         {isLoading ? (
-          <p>Loading...</p>
+          <div>
+            <SpinnerComponent />
+          </div>
         ) : (
           <div>
             <div className="flex justify-between items-center mb-6">
@@ -96,7 +101,11 @@ const AdminDashboard = () => {
                 {getCurrentPageProducts().map((product) => (
                   <tr key={product.id}>
                     <td className="px-4 py-3">{product.id}</td>
-                    <td className="px-4 py-3">{product.title}</td>
+                    <td className="px-4 py-3 text-blue-500 underline">
+                      <Link to={`/products/${String(product.id)}`}>
+                        {product.title}
+                      </Link>
+                    </td>
                     <td className="px-4 py-3">{product.category}</td>
                     <td className="px-4 py-3">{product.description}</td>
                     <td className="px-4 py-3">{product.price}</td>

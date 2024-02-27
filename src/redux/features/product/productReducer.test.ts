@@ -118,8 +118,6 @@ describe("Get product by id", () => {
   });
 });
 
-// TODO: TESTING getCategory
-
 // TODO: TESTING addNewProduct
 describe("Add a new product(fulfilled)", () => {
   test("Should create a new product", async () => {
@@ -170,5 +168,24 @@ describe("update a product (fulfilled)", () => {
       .product.products.find((product) => product.id === productId);
 
     expect(updatedProduct?.title).toBe(productData.title);
+  });
+});
+
+// TODO: TESTING getCategory
+describe("Get category", () => {
+  it("Should return products in jewelery category", async () => {
+    const categoryData: string = "jewelery";
+    await store.dispatch(getCategory(categoryData));
+
+    const state = store.getState().product;
+
+    expect(state.isSuccess).toBeTruthy();
+    expect(state.status.toLowerCase()).toEqual("success");
+    expect(state.isLoading).toBeFalsy();
+
+    const productitles = state.products.map((product) => product.title);
+    expect(productitles).toContain(
+      "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet"
+    );
   });
 });

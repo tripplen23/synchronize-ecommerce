@@ -4,8 +4,8 @@ import cartService from "./cartService";
 import { STATUS } from "../../../constants/Status";
 
 interface CartState {
-  cartItem: CartItemType[];
-  totalItem: number;
+  cartItems: CartItemType[];
+  totalItems: number;
   isLoading: boolean;
   isSuccess: boolean;
   error: string | null;
@@ -13,8 +13,8 @@ interface CartState {
 }
 
 const initialState: CartState = {
-  cartItem: [],
-  totalItem: 0,
+  cartItems: [],
+  totalItems: 0,
   isLoading: false,
   isSuccess: false,
   error: null,
@@ -31,11 +31,11 @@ export const fetchCartItems = createAsyncThunk("cart/fetch", async () => {
 });
 
 // TODO: Add new cart item
-export const addNewCart = createAsyncThunk(
+export const addToCart = createAsyncThunk(
   "cart/add",
   async (cartItem: CartItemType, thunkAPI) => {
     try {
-      const result = await cartService.addNewCart(cartItem);
+      const result = await cartService.addToCart(cartItem);
       console.log("Add to cart", result);
       return result;
     } catch (error) {
@@ -45,11 +45,11 @@ export const addNewCart = createAsyncThunk(
 );
 
 // TODO: Delete a cart
-export const deleteACart = createAsyncThunk(
+export const deleteItemFromCart = createAsyncThunk(
   "cart/remove",
   async (cartId: number, thunkAPI) => {
     try {
-      return await cartService.deleteACart(cartId);
+      return await cartService.deleteItemFromCart(cartId);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -105,7 +105,7 @@ const cartSlice = createSlice({
           isLoading: false,
           isSuccess: true,
           error: null,
-          cartItem: action.payload,
+          cartItems: action.payload,
           status: STATUS.SUCCESS,
         };
       }
@@ -119,8 +119,87 @@ const cartSlice = createSlice({
       };
     });
 
-    // TODO: Reducer's cases for addNewCart
-    // TODO: Reducer's cases for deleteACart
+    // TODO: Reducer's cases for addToCart
+    builder.addCase(addToCart.pending, (state: CartState) => {
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+        status: STATUS.LOADING,
+      };
+    });
+    builder.addCase(
+      addToCart.fulfilled,
+      (state: CartState, action: PayloadAction<CartItemType>) => {
+        const itemIndex = state.cartItems.findIndex(
+          (item) => item.product.id == action.payload.product.id
+        );
+        if (itemIndex >= 0) {
+          // If the item is already in the cart
+          state.cartItems[itemIndex].quantity += 1;
+          state.totalItems += 1;
+        } else {
+          const product = { ...action.payload, quantity: 1 };
+          state.totalItems += 1;
+          state.cartItems.push(product);
+        }
+
+        localStorage.setItem("cart", JSON.stringify(state.cartItems));
+
+        return {
+          ...state,
+          isLoading: false,
+          isSuccess: true,
+          error: null,
+          status: STATUS.SUCCESS,
+        };
+      }
+    );
+    builder.addCase(addToCart.rejected, (state: CartState, action) => {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error.message ?? "error",
+        status: STATUS.ERROR,
+      };
+    });
+
+    // TODO: Reducer's cases for deleteItemFromCart
+    builder.addCase(deleteItemFromCart.pending, (state: CartState) => {
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+        status: STATUS.LOADING,
+      };
+    });
+    builder.addCase(
+      deleteItemFromCart.fulfilled,
+      (state: CartState, action: PayloadAction<number>) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        const cartItemId = action.payload;
+        const updatedCart = state.cartItems.filter(
+          (item) => item.product.id !== cartItemId
+        );
+        state.cartItems = updatedCart;
+        state.totalItems = state.cartItems.reduce(
+          (total: number, curr: CartItemType) => (total += curr.quantity),
+          0
+        );
+        localStorage.setItem("cart", JSON.stringify(state.cartItems));
+        state.status = STATUS.SUCCESS;
+      }
+    );
+    builder.addCase(deleteItemFromCart.rejected, (state: CartState, action) => {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error.message ?? "error",
+        status: STATUS.ERROR,
+      };
+    });
+
     // TODO: Reducer's cases for decreaseQuantity
     // TODO: Reducer's cases for increaseQuantity
   },

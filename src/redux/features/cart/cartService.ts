@@ -13,7 +13,7 @@ const fetchCartItems = async () => {
 };
 
 // DOCS: Cart -> Add new cart
-const addNewCart = async (cartItem: CartItemType) => {
+const addToCart = async (cartItem: CartItemType) => {
   try {
     const response = await axiosConfig.post("carts", cartItem);
     return response.data;
@@ -24,7 +24,7 @@ const addNewCart = async (cartItem: CartItemType) => {
 };
 
 // DOCS: Cart -> Delete a cart
-const deleteACart = async (cartId: number) => {
+const deleteItemFromCart = async (cartId: number) => {
   try {
     await axiosConfig.delete(`carts/${cartId}`);
     return cartId;
@@ -61,8 +61,8 @@ const increaseQuantity = async (cartId: number) => {
 
 const cartService = {
   fetchCartItems,
-  addNewCart,
-  deleteACart,
+  addToCart,
+  deleteItemFromCart,
   decreaseQuantity,
   increaseQuantity,
 };

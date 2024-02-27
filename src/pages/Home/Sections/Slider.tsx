@@ -1,3 +1,4 @@
+import React from "react";
 import ButtonComponent from "../../../components/reusable/ButtonComponent/ButtonComponent";
 import { heroImages } from "../../../data/images";
 import {
@@ -14,8 +15,6 @@ import {
 
 const Slider = () => {
   const slideIndex = useAppSelector((state: AppState) => state.slider.value);
-  // console.log("Slide index: ", slideIndex);
-
   const dispatch = useAppDispatch();
 
   return (
@@ -32,47 +31,39 @@ const Slider = () => {
           />
         </div>
         <div>
-          {/* TODO: display fetched data here */}
-          {heroImages.map((item) => {
-            return (
-              <div>
-                <div
-                  key={item.id}
-                  className={
-                    item.id === slideIndex
-                      ? "opacity-100 duration-700 ease-in-out scale-100"
-                      : "opacity-0 duration-700 ease-in-out scale-95"
-                  }
-                >
-                  <div>
-                    {item.id === slideIndex && (
-                      <img
-                        className="h-[850px] w-auto mx-auto"
-                        srcSet={item.path}
-                        alt="heroes"
-                      />
-                    )}
-                  </div>
-                </div>
+          {heroImages.map((item, index) => (
+            <div key={index}>
+              <div
+                className={
+                  item.id === slideIndex
+                    ? "opacity-100 duration-700 ease-in-out scale-100"
+                    : "opacity-0 duration-700 ease-in-out scale-95"
+                }
+              >
+                {item.id === slideIndex && (
+                  <img
+                    className="h-[850px] w-auto mx-auto"
+                    srcSet={item.path}
+                    alt="heroes"
+                  />
+                )}
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
         <div className="flex absolute bottom-10 left-[48%]">
-          {heroImages.map((dot, index) => {
-            return (
-              <div className="mr-4" key={index}>
-                <div
-                  className={
-                    index === slideIndex
-                      ? "bg-gray-600 rounded-full p-3 cursor-pointer"
-                      : "bg-light rounded-full p-3 cursor-pointer"
-                  }
-                  onClick={() => dispatch(dotSlide(index))}
-                ></div>
-              </div>
-            );
-          })}
+          {heroImages.map((dot, index) => (
+            <div className="mr-4" key={index}>
+              <div
+                className={
+                  index === slideIndex
+                    ? "bg-gray-600 rounded-full p-3 cursor-pointer"
+                    : "bg-light rounded-full p-3 cursor-pointer"
+                }
+                onClick={() => dispatch(dotSlide(index))}
+              ></div>
+            </div>
+          ))}
         </div>
         <div>
           <button

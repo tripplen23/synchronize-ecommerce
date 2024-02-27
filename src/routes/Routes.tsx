@@ -1,7 +1,14 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import { Cart, Catalog, Home, Product, AdminDashboard } from "../pages";
-import LoginPage from "../pages/Login/Login";
+import {
+  Cart,
+  Catalog,
+  Home,
+  Product,
+  AdminDashboard,
+  AdminProfile,
+  Login,
+} from "../pages";
 
 export const router = createBrowserRouter([
   {
@@ -17,30 +24,42 @@ export const router = createBrowserRouter([
       // Login -> Admin
       {
         path: "login",
-        element: <LoginPage />,
-        children: [
-          {
-            path: "admin",
-            element: <AdminDashboard />,
-          },
-        ],
+        element: <Login />,
       },
 
       // Admin
       {
         path: "admin",
         element: <AdminDashboard />,
+        children: [
+          {
+            path: "profile",
+            element: <AdminProfile />,
+          },
+        ],
+      },
+
+      // Admin profile (Debt)
+      {
+        path: "/admin/profile",
+        element: <AdminProfile />,
       },
 
       // Catalog
       {
         path: "catalog",
         element: <Catalog />,
+        children: [
+          {
+            path: ":id",
+            element: <Catalog />,
+          },
+        ],
       },
 
       // Product
       {
-        path: "product",
+        path: "products",
         children: [
           {
             path: ":id",

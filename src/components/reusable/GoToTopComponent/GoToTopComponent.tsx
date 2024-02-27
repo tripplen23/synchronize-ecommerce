@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-export default function GoToTop() {
+const GoToTopComponent = () => {
   const routePath = useLocation();
   const onTop = () => {
     window.scrollTo(0, 0);
@@ -11,4 +11,6 @@ export default function GoToTop() {
   }, [routePath]);
 
   return null;
-}
+};
+
+export default GoToTopComponent;

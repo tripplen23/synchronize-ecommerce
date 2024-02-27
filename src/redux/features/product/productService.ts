@@ -36,7 +36,10 @@ const deleteProduct = async (productId: number) => {
 };
 
 // DOCS: Products -> Update a product
-const updateProduct = async (productId: number, productData: ModifiedProductType) => {
+const updateProduct = async (
+  productId: number,
+  productData: ModifiedProductType
+) => {
   const response = await axiosConfig.put(`products/${productId}`, productData);
   return response.data;
 };

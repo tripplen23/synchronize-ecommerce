@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+import { Spinner } from "@material-tailwind/react";
 
-const SpinnerComponent = () => {
-  return (
-    <div>SpinnerComponent</div>
-  )
+interface SpinnerComponentProps {
+  className?: string;
 }
 
-export default SpinnerComponent
+const SpinnerComponent: React.FC<SpinnerComponentProps> = ({ className }) => {
+  return (
+    <div>
+      <Spinner className={className} />
+    </div>
+  );
+};
+
+export default SpinnerComponent;

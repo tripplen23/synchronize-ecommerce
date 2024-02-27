@@ -66,7 +66,7 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
     <header className="font-kaushan w-full px-32 py-8 font-medium flex item-center justify-between dark:text-light">
       {/* link */}
       <nav>
-        <CustomLink to="/catalog" title="All" className="mr-4" />
+        <CustomLink to="/catalog/All" title="All" className="mr-4" />
         <CustomLink to="/catalog/Men" title="Men" className="mx-4" />
         <CustomLink to="/catalog/Women" title="Women" className="mx-4" />
         <CustomLink
