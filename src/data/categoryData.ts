@@ -5,4 +5,12 @@ export const categoryData = [
   { id: 3, name: "Electronics", value: "Electronics", to: "electronics" },
   { id: 4, name: "Jewelery", value: "Jewelery", to: "jewelry" },
 ];
+
+export const categories = [
+  "electronics",
+  "jewelery",
+  "men's clothing",
+  "women's clothing",
+];
+
 export const sizeData = ["XS", "SM", "M", "L", "XL", "XXL"];

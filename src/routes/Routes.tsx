@@ -1,14 +1,6 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import {
-  Cart,
-  Catalog,
-  Home,
-  Product,
-  AdminDashboard,
-
-  Login,
-} from "../pages";
+import { Cart, Catalog, Home, Product, AdminDashboard, Login } from "../pages";
 
 export const router = createBrowserRouter([
   {

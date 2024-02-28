@@ -8,6 +8,7 @@ import {
 } from "../../redux/features/product/productSlice";
 import { ModifiedProductType, ProductType } from "../../misc/productType";
 import AddingModalComponent from "../../components/reusable/ModalComponents/AddingModalComponent";
+import UpdatingModalComponent from "../../components/reusable/ModalComponents/UpdatingModalComponent";
 import ButtonComponent from "../../components/reusable/ButtonComponent/ButtonComponent";
 import { Link } from "react-router-dom";
 import SpinnerComponent from "../../components/reusable/SpinnerComponent/SpinnerComponent";
@@ -16,11 +17,16 @@ import { getUser } from "../../redux/features/auth/authSlice";
 const AdminDashboard = () => {
   const { products, isLoading } = useAppSelector((state) => state.product);
   const { user, token } = useAppSelector((state) => state.auth);
+
   const dispatch = useAppDispatch();
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const [isAddingModalOpen, setIsAddingModalOpen] = useState(false);
+  const [isUpdatingModalOpen, setIsUpdatingModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
+    null
+  );
 
   // TODO: Fetch product on component mount
   useEffect(() => {
@@ -39,8 +45,21 @@ const AdminDashboard = () => {
     setIsAddingModalOpen(false);
   };
 
-  const handleUpdate = (productId: number, productData: ProductType) => {
-    dispatch(updateProduct({ productId, productData }));
+  const handleUpdateClick = (product: ProductType) => {
+    setSelectedProduct(product);
+    setIsUpdatingModalOpen(true);
+  };
+
+  const handleUpdate = (updatedProductData: ProductType) => {
+    if (selectedProduct) {
+      dispatch(
+        updateProduct({
+          productId: updatedProductData.id,
+          productData: updatedProductData,
+        })
+      );
+    }
+    setIsUpdatingModalOpen(false);
   };
 
   const handleDelete = (productId: number) => {
@@ -126,7 +145,7 @@ const AdminDashboard = () => {
                     <td className="px-4 py-3">
                       <span
                         className="cursor-pointer text-blue-500 mr-2 hover:underline"
-                        onClick={() => handleUpdate(product.id, product)}
+                        onClick={() => handleUpdateClick(product)}
                       >
                         Update
                       </span>
@@ -172,6 +191,14 @@ const AdminDashboard = () => {
               onClose={() => setIsAddingModalOpen(false)}
               onAdd={handleAdd}
             />
+            {selectedProduct && (
+              <UpdatingModalComponent
+                isOpen={isUpdatingModalOpen}
+                onClose={() => setIsUpdatingModalOpen(false)}
+                onUpdate={handleUpdate}
+                product={selectedProduct}
+              />
+            )}
           </div>
         )}
       </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import { ModifiedProductType } from "../../../misc/productType";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import { categories } from "../../../data/categoryData";
 
 interface AddProductModalProps {
   isOpen: boolean;
@@ -22,7 +23,9 @@ const AddingModalComponent: React.FC<AddProductModalProps> = ({
     image: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
@@ -69,14 +72,23 @@ const AddingModalComponent: React.FC<AddProductModalProps> = ({
               <label htmlFor="category" className="block text-gray-700">
                 Category:
               </label>
-              <input
-                type="text"
+              <select
                 id="category"
                 name="category"
                 required
                 className="w-full border rounded p-2"
-                onChange={handleInputChange}
-              />
+                value={formData.category}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  handleInputChange(e)
+                }
+              >
+                {/* Map through categories to create options */}
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="mb-4">
