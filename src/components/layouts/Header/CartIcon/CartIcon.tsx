@@ -1,9 +1,13 @@
 import React from "react";
 import { FaOpencart } from "react-icons/fa";
 
-const CartIcon = () => {
+interface CartIconProps {
+  handleShow: () => void;
+}
+
+const CartIcon: React.FC<CartIconProps> = ({ handleShow }) => {
   return (
-    <div>
+    <div onClick={handleShow}>
       <FaOpencart />
     </div>
   );

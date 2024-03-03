@@ -4,13 +4,13 @@ import { ModifiedProductType } from "../../../misc/productType";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import { categories } from "../../../data/categoryData";
 
-interface AddProductModalProps {
+interface AddingProductModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAdd: (productData: ModifiedProductType) => void;
 }
 
-const AddingModalComponent: React.FC<AddProductModalProps> = ({
+const AddingModalComponent: React.FC<AddingProductModalProps> = ({
   isOpen,
   onClose,
   onAdd,
@@ -28,6 +28,18 @@ const AddingModalComponent: React.FC<AddProductModalProps> = ({
   ) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const imageUrl = reader.result as string;
+        setFormData((prevFormData) => ({ ...prevFormData, image: imageUrl }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleAdd = () => {
@@ -110,13 +122,21 @@ const AddingModalComponent: React.FC<AddProductModalProps> = ({
                 Image:
               </label>
               <input
-                type="text"
+                type="file" // Change input type to file
                 id="image"
                 name="image"
-                required
+                accept="image/*" // Accept only image files
                 className="w-full border rounded p-2"
-                onChange={handleInputChange}
+                onChange={handleImageChange} // Call handleImageChange on change
               />
+              {formData.image && (
+                <img
+                  src={formData.image}
+                  alt="Selected"
+                  className="mt-2 rounded"
+                  style={{ maxWidth: "100%" }}
+                />
+              )}
             </div>
           </div>
 

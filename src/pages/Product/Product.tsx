@@ -36,7 +36,7 @@ const Product = () => {
 
   useEffect(() => {
     dispatch(getProductById(Number(id)));
-  }, []);
+  }, [dispatch, id]);
 
   const routes = [
     { name: "Home", route: "/" },

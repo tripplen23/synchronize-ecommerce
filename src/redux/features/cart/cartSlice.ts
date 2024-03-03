@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartItemType } from "../../../misc/cartType";
 import cartService from "./cartService";
 import { STATUS } from "../../../constants/Status";
+import { ProductType } from "../../../misc/productType";
 
 interface CartState {
   cartItems: CartItemType[];
@@ -12,7 +13,7 @@ interface CartState {
   status: string;
 }
 
-const initialState: CartState = {
+export const initialState: CartState = {
   cartItems: [],
   totalItems: 0,
   isLoading: false,
@@ -59,9 +60,9 @@ export const deleteItemFromCart = createAsyncThunk(
 // TODO: Decrease quantity
 export const decreaseQuantity = createAsyncThunk(
   "cart/decrease",
-  async (cartId: number, thunkAPI) => {
+  async (productInCart: ProductType, thunkAPI) => {
     try {
-      return await cartService.decreaseQuantity(cartId);
+      return await cartService.decreaseQuantity(productInCart);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -71,16 +72,16 @@ export const decreaseQuantity = createAsyncThunk(
 // TODO: Increase quantity
 export const increaseQuantity = createAsyncThunk(
   "cart/increase",
-  async (cartId: number, thunkAPI) => {
+  async (productInCart: ProductType, thunkAPI) => {
     try {
-      return await cartService.increaseQuantity(cartId);
+      return await cartService.increaseQuantity(productInCart);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-const cartSlice = createSlice({
+export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
@@ -131,28 +132,24 @@ const cartSlice = createSlice({
     builder.addCase(
       addToCart.fulfilled,
       (state: CartState, action: PayloadAction<CartItemType>) => {
+        state.isLoading = false;
+        state.isSuccess = true;
         const itemIndex = state.cartItems.findIndex(
-          (item) => item.product.id == action.payload.product.id
+          (item) => item.product.id === action.payload.product.id
         );
         if (itemIndex >= 0) {
-          // If the item is already in the cart
+          // If the item is already in the cart -> increase its quality by 1
           state.cartItems[itemIndex].quantity += 1;
           state.totalItems += 1;
         } else {
-          const product = { ...action.payload, quantity: 1 };
+          // If the item is not in the cart -> add it into to cart
+          const addedItem = { ...action.payload, quantity: 1 };
           state.totalItems += 1;
-          state.cartItems.push(product);
+          state.cartItems.push(addedItem);
         }
 
         localStorage.setItem("cart", JSON.stringify(state.cartItems));
-
-        return {
-          ...state,
-          isLoading: false,
-          isSuccess: true,
-          error: null,
-          status: STATUS.SUCCESS,
-        };
+        state.status = STATUS.SUCCESS;
       }
     );
     builder.addCase(addToCart.rejected, (state: CartState, action) => {
@@ -201,7 +198,84 @@ const cartSlice = createSlice({
     });
 
     // TODO: Reducer's cases for decreaseQuantity
+    builder.addCase(decreaseQuantity.pending, (state: CartState) => {
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+        status: STATUS.LOADING,
+      };
+    });
+    builder.addCase(
+      decreaseQuantity.fulfilled,
+      (state: CartState, action: PayloadAction<ProductType>) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        const productIndex = state.cartItems.findIndex(
+          (item) => item.product.id === action.payload.id
+        );
+
+        if (state.cartItems[productIndex].quantity > 1) {
+          // If the quantity of the product > 1 -> decrease the quantity by 1
+          state.cartItems[productIndex].quantity -= 1;
+          state.totalItems -= 1;
+        } else if (state.cartItems[productIndex].quantity === 1) {
+          // If the quantity of the product = 1 -> delete this product outa the cart
+          const updatedCart = state.cartItems.filter(
+            (item) => item.product.id !== action.payload.id
+          );
+          state.cartItems = updatedCart;
+          state.totalItems -= 1;
+        }
+
+        localStorage.setItem("cart", JSON.stringify(state.cartItems));
+        state.status = STATUS.SUCCESS;
+      }
+    );
+    builder.addCase(decreaseQuantity.rejected, (state: CartState, action) => {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error.message ?? "error",
+        status: STATUS.ERROR,
+      };
+    });
+
     // TODO: Reducer's cases for increaseQuantity
+    builder.addCase(increaseQuantity.pending, (state: CartState) => {
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+        status: STATUS.LOADING,
+      };
+    });
+    builder.addCase(
+      increaseQuantity.fulfilled,
+      (state: CartState, action: PayloadAction<ProductType>) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        const productIndex = state.cartItems.findIndex(
+          (item) => item.product.id === action.payload.id
+        );
+
+        if (state.cartItems[productIndex].quantity >= 1) {
+          // If the product exists in the cart
+          state.cartItems[productIndex].quantity += 1;
+          state.totalItems += 1;
+        }
+        localStorage.setItem("cart", JSON.stringify(state.cartItems));
+        state.status = STATUS.SUCCESS;
+      }
+    );
+    builder.addCase(increaseQuantity.rejected, (state: CartState, action) => {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error.message ?? "error",
+        status: STATUS.ERROR,
+      };
+    });
   },
 });
 

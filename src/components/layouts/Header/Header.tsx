@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
   const dispatch = useAppDispatch();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  // Check if user details are present in local storage
+  // TODO: Check if login token is present in local storage
   useEffect(() => {
     const loginToken = localStorage.getItem("loginToken");
 
@@ -87,12 +87,13 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
 
       {/* Features */}
       <nav className="flex items-center justify-center flex-wrap mr-10">
+        {/* Cart */}
         <motion.div
           whileHover={{ y: -2 }}
           whileTap={{ scale: 0.9 }}
           className="w-6 mx-3"
         >
-          <CartIcon />
+          <CartIcon handleShow={handleShow} />
         </motion.div>
         {/* If user is in the local storage, logout will be shown otherwise login and User*/}
         {isAuthenticated === true ? (
