@@ -6,6 +6,7 @@ interface CartIconProps {
 }
 
 const CartIcon: React.FC<CartIconProps> = ({ handleShow }) => {
+  
   return (
     <div onClick={handleShow}>
       <FaOpencart />
