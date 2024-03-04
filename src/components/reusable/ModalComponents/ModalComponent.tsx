@@ -11,14 +11,16 @@ export const ModalComponent = ({
   children,
   onClose,
   isRight,
+  isOpen,
 }: {
   children: ReactNode;
   isOpen: boolean;
   onClose: () => void;
   isRight?: boolean;
 }) => {
+  // TODO: Press esc key on the keyboard to close the modal
   const handleEscape = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
+    if (e.key === "Escape" && isOpen) {
       onClose();
     }
   };
@@ -27,19 +29,13 @@ export const ModalComponent = ({
     document.addEventListener("keydown", handleEscape);
 
     return () => document.removeEventListener("keydown", handleEscape);
-  }, []);
+  }, [isOpen]);
 
-  const cartModalVariants = isRight
-    ? {
-        hidden: { x: "50vw", opacity: 0 },
-        visible: { x: 0, opacity: 1 },
-        exit: { x: "50vw", opacity: 0 },
-      }
-    : {
-        hidden: { y: "50vh", opacity: 0 },
-        visible: { y: 0, opacity: 1 },
-        exit: { y: "50vh", opacity: 0 },
-      };
+  const cartModalVariants = {
+    hidden: { x: isRight ? "100%" : "-100%", opacity: 0 },
+    visible: { x: "0%", opacity: 1 },
+    exit: { x: isRight ? "100%" : "-100%", opacity: 0 },
+  };
 
   // Wrap onClose in an object of type IModal
   const modalValue: IModal = {
@@ -51,7 +47,7 @@ export const ModalComponent = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      transition={{ duration: 0.5 }}
       className="fixed top-0 left-0 w-full h-full overflow-x-hidden overflow-y-auto bg-black bg-opacity-50 flex"
     >
       <motion.div
@@ -59,14 +55,16 @@ export const ModalComponent = ({
         animate="visible"
         variants={cartModalVariants}
         exit="exit"
-        className={`m-auto p-6 bg-white bg-gradient-to-b from-white to-pink-200 rounded-xl max-w-xl w-full ${
-          isRight ? "flex-row-reverse" : "flex-col"
-        }`}
+        className={`fixed top-0 ${
+          isRight ? "right-0" : "left-0"
+        } w-96 h-full bg-white z-50`}
       >
-        <div>
-          <ModalComponentContext.Provider value={modalValue}>
-            {children}
-          </ModalComponentContext.Provider>
+        <div className="p-6 h-full bg-gradient-to-b from-white to-gray-900 rounded-xl">
+          <div>
+            <ModalComponentContext.Provider value={modalValue}>
+              {children}
+            </ModalComponentContext.Provider>
+          </div>
         </div>
       </motion.div>
     </motion.div>
@@ -101,20 +99,9 @@ const ModalHeader = ({ children }: { children: ReactNode }) => {
   );
 };
 
-const ModalBody = ({
-  children,
-  isRight,
-}: {
-  children: ReactNode;
-  isRight?: boolean;
-}) => {
+const ModalBody = ({ children }: { children: ReactNode }) => {
   return (
     <>
-      {!isRight && (
-        <div className="flex justify-end mb-4">
-          <DismissButton className="">&times;</DismissButton>
-        </div>
-      )}
       <div className="">{children}</div>
     </>
   );

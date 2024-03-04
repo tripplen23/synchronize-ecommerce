@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAppSelector } from "../../../redux/utils/hooks";
 import ModalComponent from "../../../components/reusable/ModalComponents/ModalComponent";
 import { useMediaQuery } from "react-responsive";
 import { CartItemType } from "../../../misc/cartType";
 import CartProduct from "../CartProduct/CartProduct";
 import ButtonComponent from "../../../components/reusable/ButtonComponent/ButtonComponent";
+import { motion } from "framer-motion";
 
 interface CartModalProps {
   show: boolean;
@@ -13,8 +14,6 @@ interface CartModalProps {
 
 const CartModal: React.FC<CartModalProps> = ({ show, setShow }) => {
   const { cartItems } = useAppSelector((state) => state.cart);
-
-  console.log("CartModal is rendering with show value:", show);
 
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.quantity * item.product.price,
@@ -29,10 +28,23 @@ const CartModal: React.FC<CartModalProps> = ({ show, setShow }) => {
     setShow(false);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 },
+  };
+
   return (
     <ModalComponent isOpen={show} onClose={handleClose} isRight={isBigScreen}>
-      <div className="container">
-        <div className="content">
+      <motion.div
+        className="container rounded-lg overflow-hidden shadow-xl bg-white w-92"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
+        <div className="p-6">
+          <h3 className="text-lg font-semibold mb-4">Your Cart</h3>
           {cartItems.map((item: CartItemType) => (
             <CartProduct
               key={item.product.id}
@@ -40,41 +52,28 @@ const CartModal: React.FC<CartModalProps> = ({ show, setShow }) => {
               onClick={handleClose}
             />
           ))}
-        </div>
-        <div className="footer_container">
-          <div className="footer_wrapper">
-            <div className="footer_total">
-              <p>
-                <span>Total</span>
-              </p>
-            </div>
-            <div className="buttons_wrapper">
-              <div className="buttons_container">
-                <ButtonComponent
-                  className="button cart_button"
-                  to="/cart"
-                  onClick={handleClose}
-                >
-                  Your cart
-                </ButtonComponent>
-                <ButtonComponent
-                  className="button checkout_button"
-                  to="/cart"
-                  onClick={handleClose}
-                >
-                  Check out
-                </ButtonComponent>
-              </div>
-              <ButtonComponent
-                className="button close_button"
-                onClick={handleClose}
-              >
-                Go back
-              </ButtonComponent>
-            </div>
+          <div className="flex justify-between items-center border-t pt-4">
+            <p className="text-lg font-semibold">Total:</p>
+            <p className="text-lg font-semibold">€{totalPrice.toFixed(2)}</p>
+          </div>
+          <div className="flex mt-2 justify-between">
+            <ButtonComponent className="mr-4" to="/cart" onClick={handleClose}>
+              Your Cart
+            </ButtonComponent>
+            <ButtonComponent to="/cart" onClick={handleClose}>
+              Check out
+            </ButtonComponent>
+          </div>
+          <div className="mt-4">
+            <ButtonComponent
+              className="button w-full bg-gray-200 hover:bg-gray-300"
+              onClick={handleClose}
+            >
+              Go back
+            </ButtonComponent>
           </div>
         </div>
-      </div>
+      </motion.div>
     </ModalComponent>
   );
 };

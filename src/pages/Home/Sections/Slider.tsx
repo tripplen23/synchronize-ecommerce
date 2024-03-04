@@ -31,9 +31,9 @@ const Slider = () => {
               options={{
                 strings: [
                   "Men's clothings",
-                  "Women's clothing",
-                  "electronics",
-                  "jewelery",
+                  "Women's clothings",
+                  "Electronics",
+                  "Jewelery",
                 ],
                 autoStart: true,
                 loop: true,
