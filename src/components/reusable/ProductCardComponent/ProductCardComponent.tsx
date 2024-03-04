@@ -81,7 +81,8 @@ const ProductCardComponent: FC<ProductCardComponentProps> = ({
         ease: "easeInOut",
         duration: 0.4,
       }}
-      className="flex flex-col max-w-xs rounded-lg overflow-hidden shadow-lg"
+      whileHover={{ scale: 1.05, boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.1)" }}
+      className="flex flex-col max-w-xs rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800"
     >
       {/* Product Image */}
       <div className="flex justify-center">
@@ -92,13 +93,21 @@ const ProductCardComponent: FC<ProductCardComponentProps> = ({
 
       {/* Product Details */}
       <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{title}</div>
+        <div className="font-bold text-xl mb-2 text-gray-800 dark:text-white">
+          {title}
+        </div>
         <div className="flex items-center mb-2">
           {rating && renderRatingStars(rating)}
         </div>
-        <p className="text-gray-700 text-base mb-2">{description}</p>
-        <p className="text-gray-700 text-base mb-2">Category: {category}</p>
-        <p className="text-gray-900 font-bold text-xl mb-2">{price}€</p>
+        <p className="text-gray-700 text-base mb-2 dark:text-gray-300">
+          {description}
+        </p>
+        <p className="text-gray-700 text-base mb-2 dark:text-gray-300">
+          Category: {category}
+        </p>
+        <p className="text-gray-900 font-bold text-xl mb-2 dark:text-gray-100">
+          €{price}
+        </p>
       </div>
 
       {/* Add to Cart Button */}
@@ -106,7 +115,7 @@ const ProductCardComponent: FC<ProductCardComponentProps> = ({
         <motion.button
           onClick={() => addToCartHandler()}
           whileHover={{ scale: 1.1 }}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full"
+          className="bg-gradient-to-r from-purple-600 to-indigo-600 px-4 py-1 rounded-full text-white text-sm font-semibold text-white font-bold py-2 px-4 rounded-full w-full"
         >
           {isLoadingProduct ? (
             <SpinnerComponent className="h-4 w-4" />

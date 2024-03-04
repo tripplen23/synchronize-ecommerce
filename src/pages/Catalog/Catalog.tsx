@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/utils/hooks";
 import {
   getCategory,
@@ -9,24 +9,29 @@ import SpinnerComponent from "../../components/reusable/SpinnerComponent/Spinner
 import { ROUTES } from "../../constants/Route";
 import { useNavigate, useParams } from "react-router-dom";
 import { categoryData } from "../../data/categoryData";
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack, MdArrowForward } from "react-icons/md";
 import ButtonComponent from "../../components/reusable/ButtonComponent/ButtonComponent";
 import GoToTopComponent from "../../components/reusable/GoToTopComponent/GoToTopComponent";
 
 const Catalog = () => {
   let { id } = useParams();
   const { products, isLoading } = useAppSelector((state) => state.product);
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 4;
+  const totalPages = Math.ceil(products.length / productsPerPage);
 
   useEffect(() => {
     if (!id) {
       const newUrl = window.location.pathname + "/All";
       window.history.pushState({ path: newUrl }, "", newUrl);
-
       id = "All";
     }
+
+    setCurrentPage(1); // Reset page to 1 when switching categories
 
     const category = [
       ...categoryData.filter((item) => {
@@ -50,30 +55,60 @@ const Catalog = () => {
 
   if (isLoading) return <SpinnerComponent />;
 
+  // Pagination Logic
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
-    <div>
-      <div>
+    <div className="container mx-auto px-4 py-8">
+      {/* header components */}
+      <div className="flex items-center justify-between mb-16">
         <ButtonComponent onClick={() => navigate(-1)}>
           <MdArrowBack />
         </ButtonComponent>
-        <div>{convertedString}</div>
+        <div></div>
+        <h2 className="text-3xl font-bold">{convertedString}</h2>
       </div>
-      <div>
-        {products?.map((product, index) => {
-          return (
-            <ProductCardComponent
-              id={product.id}
-              key={index}
-              productKey={index} // key should not be used as a prop.
-              title={product.title}
-              price={product.price}
-              category={product.category}
-              description={product.description}
-              image={product.image}
-              rating={product.rating}
-            />
-          );
-        })}
+
+      {/* Products */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16">
+        {currentProducts.map((product, index) => (
+          <ProductCardComponent
+            id={product.id}
+            key={index}
+            productKey={index}
+            title={product.title}
+            price={product.price}
+            category={product.category}
+            image={product.image}
+            rating={product.rating}
+          />
+        ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center mt-4">
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => paginate(i + 1)}
+            className={`${
+              i + 1 === currentPage
+                ? "bg-primary text-light"
+                : "text-light hover:bg-pink-300 bg-gray-900"
+            } mx-1 py-1 px-3 rounded-lg transition-colors`}
+          >
+            {i + 1}
+          </button>
+        ))}
       </div>
       <GoToTopComponent />
     </div>

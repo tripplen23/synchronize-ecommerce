@@ -10,7 +10,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="w-full border-t-2 border-solid border-dark font-medium text-lg dark:text-light">
+    <footer className="w-full border-t-2 border-solid border-dark dark:border-light font-medium text-lg dark:text-light">
       <div className="layout w-full h-full inline-block z-0 bg-light p-20 dark:bg-dark">
         <div className="flex flex-col lg:flex-row items-center justify-between">
           <span className="text-center lg:text-left text-gray-600 dark:text-gray-400">
@@ -21,12 +21,14 @@ const Footer = () => {
               Build With{" "}
               <span className="text-primary text-2xl px-1">&#9825;</span>{" "}
               by&nbsp;
-              <Link
-                to="/"
+              <a
+                href="https://github.com/tripplen23"
+                target="_blank"
+                rel="noreferrer"
                 className="underline underline-offset-2 hover:text-primary transition-colors"
               >
                 BinhNguyen
-              </Link>
+              </a>
             </div>
             <div className="socials flex items-center space-x-4">
               <a

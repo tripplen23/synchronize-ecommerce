@@ -36,9 +36,11 @@ const QuickView = () => {
   };
 
   return (
-    <section className="quickview-section bg-gray-100 py-12 dark:bg-dark">
+    <section className="quickview-section bg-gray-100 py-12 dark:bg-gray-900 ">
       <div className="container mx-auto">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">Quick View</h2>
+        <h2 className="text-3xl font-bold text-gray dark:text-light-800 mb-6">
+          Quick View
+        </h2>
         <div className="category-container flex flex-wrap gap-4 items-center justify-between mb-8">
           <div className="buttons flex space-x-4">
             {categoryData?.map((item) => (
@@ -53,9 +55,9 @@ const QuickView = () => {
                 />
                 <label
                   htmlFor={item.name}
-                  className={`btn btn-default rounded-full py-2 px-4 cursor-pointer ${
+                  className={`btn btn-default rounded-full py-2 px-4 cursor-pointer hover:text-pink-800 ${
                     selectedCategory === item.name
-                      ? "bg-gray-500 text-white"
+                      ? "bg-primary text-white"
                       : "bg-gray-200 text-gray-700"
                   }`}
                 >
@@ -66,7 +68,7 @@ const QuickView = () => {
           </div>
           <Link
             to={`/catalog/${String(selectedCategory)}`}
-            className="view-all flex items-center space-x-2 text-blue-500 hover:text-blue-700"
+            className="view-all flex items-center space-x-2 text-primary hover:text-pink-800"
           >
             <div className="text-lg">View More</div>
             <MdArrowRightAlt className="icon" />

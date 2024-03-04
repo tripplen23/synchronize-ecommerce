@@ -12,6 +12,7 @@ import {
   MdOutlineKeyboardArrowRight,
   MdOutlineKeyboardArrowLeft,
 } from "react-icons/md";
+import Typewriter from "typewriter-effect";
 
 const Slider = () => {
   const slideIndex = useAppSelector((state: AppState) => state.slider.value);
@@ -24,6 +25,21 @@ const Slider = () => {
           <h1 className="text-3xl font-sirin font-bold mb-10">
             ☀️New born stars from the dawn of the universe☀️
           </h1>
+          <span className="text-dark dark:text-light mt-0 md:mb-10 font text-xl md:text-xl lg:text-3xl">
+            {" "}
+            <Typewriter
+              options={{
+                strings: [
+                  "Men's clothings",
+                  "Women's clothing",
+                  "electronics",
+                  "jewelery",
+                ],
+                autoStart: true,
+                loop: true,
+              }}
+            />
+          </span>
           <ButtonComponent
             to="/catalog"
             className="font-kaushan"
@@ -57,7 +73,7 @@ const Slider = () => {
               <div
                 className={
                   index === slideIndex
-                    ? "bg-gray-600 rounded-full p-3 cursor-pointer"
+                    ? "bg-primary rounded-full p-3 cursor-pointer"
                     : "bg-light rounded-full p-3 cursor-pointer"
                 }
                 onClick={() => dispatch(dotSlide(index))}
