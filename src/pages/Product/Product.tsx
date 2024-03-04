@@ -7,7 +7,7 @@ import { getProductById } from "../../redux/features/product/productSlice";
 import { CartItemType } from "../../misc/cartType";
 import { addToCart } from "../../redux/features/cart/cartSlice";
 import { sizeData } from "../../data/categoryData";
-import { AiOutlineArrowLeft, AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 import { FaOpencart } from "react-icons/fa";
 
 const Product = () => {
@@ -50,36 +50,6 @@ const Product = () => {
     return <SpinnerComponent />;
   }
 
-  const renderRatingStars = (rating: any) => {
-    const stars = [];
-    const fullStars = Math.floor(rating.rate);
-    const hasHalfStar = rating.rate - fullStars >= 0.5;
-
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<AiFillStar key={`full-${i}`} className="text-yellow-500" />);
-    }
-
-    if (hasHalfStar) {
-      stars.push(<AiFillStar key={`half`} className="text-yellow-500" />);
-    }
-
-    const remainingStars = 5 - stars.length;
-
-    for (let i = 0; i < remainingStars; i++) {
-      stars.push(
-        <AiOutlineStar key={`empty-${i}`} className="text-gray-400" />
-      );
-    }
-
-    return (
-      <div className="flex items-center">
-        {stars.map((star, index) => (
-          <span key={index}>{star}</span>
-        ))}
-      </div>
-    );
-  };
-
   return (
     <section className="container mx-auto px-4 py-8">
       <div>
@@ -121,16 +91,6 @@ const Product = () => {
             <p className="text-gray-800 dark:text-gray-500 mb-6">
               {product.description}
             </p>
-            <div className="flex items-center mb-4">
-              <div className="flex items-center">
-                <div className="text-2xl text-yellow-500 mr-2">
-                  {renderRatingStars(product.rating)}
-                </div>
-                <span className="text-gray-500">
-                  ({product.rating?.count} reviews)
-                </span>
-              </div>
-            </div>
             <div className="mb-6">
               <h3 className="text-xl font-semibold mb-2">Size:</h3>
 
