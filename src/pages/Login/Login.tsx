@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../redux/utils/hooks";
 import { getUser, login } from "../../redux/features/auth/authSlice";
 import SpinnerComponent from "../../components/reusable/SpinnerComponent/SpinnerComponent";
+import TransitionEffect from "../../components/reusable/TransitionEffect/TransitionEffect";
 
 const Login = () => {
   const { user, token, isLoading } = useAppSelector((state) => state.auth);
@@ -43,15 +44,9 @@ const Login = () => {
     }
   };
 
-  if (isLoading)
-    return (
-      <div>
-        <SpinnerComponent />
-      </div>
-    );
-
   return (
     <div className="min-h-screen flex items-center justify-center">
+      <TransitionEffect />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md"
@@ -98,7 +93,7 @@ const Login = () => {
 
         <div className="flex items-center justify-between">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-dark hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
             Sign In

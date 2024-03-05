@@ -12,6 +12,7 @@ import { categoryData } from "../../data/categoryData";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
 import ButtonComponent from "../../components/reusable/ButtonComponent/ButtonComponent";
 import GoToTopComponent from "../../components/reusable/GoToTopComponent/GoToTopComponent";
+import TransitionEffect from "../../components/reusable/TransitionEffect/TransitionEffect";
 
 const Catalog = () => {
   let { id } = useParams();
@@ -53,8 +54,6 @@ const Catalog = () => {
     ?.map((word) => word?.charAt(0)?.toUpperCase() + word?.slice(1))
     ?.join(" ");
 
-  if (isLoading) return <SpinnerComponent />;
-
   // Pagination Logic
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -69,6 +68,7 @@ const Catalog = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <TransitionEffect />
       {/* header components */}
       <div className="flex items-center justify-between mb-16">
         <ButtonComponent onClick={() => navigate(-1)}>

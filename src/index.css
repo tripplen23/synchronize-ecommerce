@@ -1,17 +1,6 @@
 @font-face {
-  font-family: "Kaushan Script";
-  src: url("./assets/fonts/KaushanScript-Regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Sirin Stencil";
-  src: url("./assets/fonts/SirinStencil-Regular.ttf") format("truetype");
-}
-
-@font-face {
   font-family: "Orbitron";
-  src: url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap")
-    format("truetype");
+  src: url("./assets/fonts/Orbitron-VariableFont_wght.ttf") format("truetype");
 }
 
 @tailwind base;

@@ -21,7 +21,9 @@ export const ModalComponent = ({
   // TODO: Press esc key on the keyboard to close the modal
   const handleEscape = (e: KeyboardEvent) => {
     if (e.key === "Escape" && isOpen) {
-      onClose();
+      setTimeout(() => {
+        onClose();
+      }, 300); // Adjust the delay as needed
     }
   };
 
@@ -55,9 +57,9 @@ export const ModalComponent = ({
         animate="visible"
         variants={cartModalVariants}
         exit="exit"
-        className={`fixed top-0 ${
-          isRight ? "right-0" : "left-0"
-        } w-96 h-full bg-white z-50`}
+        className={`fixed top-5  ${
+          isRight ? "right-5" : "left-0"
+        } w-96 h-auto max-h-full bg-light z-50 rounded-2xl shadow-lg overflow-y-auto`}
       >
         <div className="p-6 h-full bg-gradient-to-b from-white to-gray-900 rounded-xl">
           <div>

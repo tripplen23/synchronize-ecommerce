@@ -13,10 +13,10 @@ const LogoComponent = () => {
         whileHover={{
           backgroundColor: [
             "#121212",
-            "#a085b2",
+            "#11ad99",
             "#fe8787",
             "#ffcf8c",
-            "#976fb1",
+            "#58E6D9",
             "#121212",
           ],
           transition: { duration: 1, repeat: Infinity },

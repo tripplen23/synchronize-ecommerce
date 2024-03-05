@@ -24,7 +24,7 @@ const addToCart = async (cartItem: CartItemType) => {
 
 const deleteItemFromCart = async (cartId: number) => {
   try {
-    await axiosConfig.post(`carts/${cartId}`);
+    await axiosConfig.delete(`carts/${cartId}`);
     return cartId;
   } catch (error) {
     console.error("Error removing item from cart: ", error);

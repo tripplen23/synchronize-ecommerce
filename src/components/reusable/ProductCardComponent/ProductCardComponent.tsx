@@ -92,7 +92,7 @@ const ProductCardComponent: FC<ProductCardComponentProps> = ({
       </div>
 
       {/* Product Details */}
-      <div className="px-6 py-4">
+      <div className="px-6 py-4 flex flex-col">
         <div className="font-bold text-xl mb-2 text-gray-800 dark:text-white">
           {title}
         </div>
@@ -115,7 +115,7 @@ const ProductCardComponent: FC<ProductCardComponentProps> = ({
         <motion.button
           onClick={() => addToCartHandler()}
           whileHover={{ scale: 1.1 }}
-          className="bg-gradient-to-r from-purple-600 to-indigo-600 px-4 py-1 rounded-full text-white text-sm font-semibold text-white font-bold py-2 px-4 rounded-full w-full"
+          className="bg-gradient-to-r from-purple-300 to-primary px-4 py-1 rounded-full text-white text-sm font-semibold text-white font-bold py-2 px-4 rounded-full w-full"
         >
           {isLoadingProduct ? (
             <SpinnerComponent className="h-4 w-4" />

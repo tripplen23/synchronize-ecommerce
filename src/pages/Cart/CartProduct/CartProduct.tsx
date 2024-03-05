@@ -10,6 +10,7 @@ import {
   increaseQuantity,
 } from "../../../redux/features/cart/cartSlice";
 import SpinnerComponent from "../../../components/reusable/SpinnerComponent/SpinnerComponent";
+import { motion } from "framer-motion";
 
 interface CartProdutProps {
   item: CartItemType;
@@ -30,27 +31,34 @@ const CartProduct: FC<CartProdutProps> = ({ item, onClick }) => {
   };
 
   return (
-    <div className="cartCardWrapper flex flex-col justify-between py-4 border-b">
+    <motion.div
+      transition={{
+        ease: "easeInOut",
+        duration: 0.4,
+      }}
+      whileHover={{ scale: 1.05, boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.1)" }}
+      className="cartCardWrapper flex flex-col justify-between py-4 border-b items-center"
+    >
       <Link
         to={`/products/${item.product.id}`}
-        className="cartCardContainer flex items-center gap-4 w-1/2"
+        className="cartCardContainer flex items-center gap-4 mb-4"
         onClick={onClick}
       >
-        <div className="w-16 h-16 overflow-hidden">
+        <div className="w-1/4 flex-shrink-0">
           <img
             src={item.product.image}
             alt={item.product.title}
             className="w-full h-full object-cover rounded-lg"
           />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col flex-grow ml-4">
           <h3 className="text-lg font-semibold">
             {truncateString(item.product.title, 20)}
           </h3>
           <p className="text-gray-600">€ {item.product.price}</p>
         </div>
       </Link>
-      <div className="cartCardRight flex items-center">
+      <div className="cartCardRight flex items-center justify-center">
         <div className="cartCardRightWrapper flex items-center gap-4">
           <ButtonComponent
             className="button"
@@ -73,7 +81,7 @@ const CartProduct: FC<CartProdutProps> = ({ item, onClick }) => {
           <MdDelete className="icon" />
         </ButtonComponent>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

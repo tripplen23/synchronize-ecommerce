@@ -13,6 +13,7 @@ import ButtonComponent from "../../components/reusable/ButtonComponent/ButtonCom
 import { Link } from "react-router-dom";
 import SpinnerComponent from "../../components/reusable/SpinnerComponent/SpinnerComponent";
 import { getUser } from "../../redux/features/auth/authSlice";
+import TransitionEffect from "../../components/reusable/TransitionEffect/TransitionEffect";
 
 const AdminDashboard = () => {
   const { products, isLoading } = useAppSelector((state) => state.product);
@@ -78,6 +79,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="container mx-auto mt-8">
+      <TransitionEffect />
       <div className="text-center mb-4">
         <h1 className="text-3xl font-semibold">Admin Dashboard</h1>
         <br />

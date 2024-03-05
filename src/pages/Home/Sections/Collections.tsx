@@ -34,7 +34,7 @@ const Collections = () => {
                   <MdArrowForward />
                 </Link>
               </div>
-              <div className="absolute bottom-4 left-4 bg-gradient-to-r from-purple-600 to-indigo-600 px-4 py-1 rounded-full text-white text-sm font-semibold">
+              <div className="absolute bottom-4 left-4 bg-gradient-to-r from-purple-300 to-primary px-4 py-1 rounded-full text-white text-sm font-semibold">
                 New Collection
               </div>
             </motion.div>

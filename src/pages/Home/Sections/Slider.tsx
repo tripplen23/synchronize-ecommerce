@@ -22,7 +22,7 @@ const Slider = () => {
     <section>
       <div className="relative pb-4">
         <div className="mx-auto m-5 mb-10 flex flex-col items-center justify-center">
-          <h1 className="text-3xl font-sirin font-bold mb-10">
+          <h1 className="text-3xl font-bold mb-10 mt-5">
             ☀️New born stars from the dawn of the universe☀️
           </h1>
           <span className="text-dark dark:text-light mt-0 md:mb-10 font text-xl md:text-xl lg:text-3xl">
@@ -40,11 +40,7 @@ const Slider = () => {
               }}
             />
           </span>
-          <ButtonComponent
-            to="/catalog"
-            className="font-kaushan"
-            children="Shop Now"
-          />
+          <ButtonComponent to="/catalog" children="Shop Now" />
         </div>
         <div>
           {heroImages.map((item, index) => (
@@ -73,7 +69,7 @@ const Slider = () => {
               <div
                 className={
                   index === slideIndex
-                    ? "bg-primary rounded-full p-3 cursor-pointer"
+                    ? "bg-gray-400 rounded-full p-3 cursor-pointer"
                     : "bg-light rounded-full p-3 cursor-pointer"
                 }
                 onClick={() => dispatch(dotSlide(index))}

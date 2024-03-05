@@ -19,7 +19,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({
   disabled,
 }) => {
   const baseStyles =
-    "transition duration-300 ease-in-out transform hover:scale-110";
+    "transition duration-300 ease-in-out transform hover:scale-105";
 
   if (to) {
     return (

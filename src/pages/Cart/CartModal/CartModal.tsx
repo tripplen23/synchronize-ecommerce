@@ -43,8 +43,10 @@ const CartModal: React.FC<CartModalProps> = ({ show, setShow }) => {
         animate="visible"
         exit="exit"
       >
-        <div className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Your Cart</h3>
+        <div className="p-6 ">
+          <h3 className="text-xl font-semibold mb-4 flex flex-col items-center">
+            Your Cart
+          </h3>
           {cartItems.map((item: CartItemType) => (
             <CartProduct
               key={item.product.id}
@@ -65,10 +67,7 @@ const CartModal: React.FC<CartModalProps> = ({ show, setShow }) => {
             </ButtonComponent>
           </div>
           <div className="mt-4">
-            <ButtonComponent
-              className="button w-full bg-gray-200 hover:bg-gray-300"
-              onClick={handleClose}
-            >
+            <ButtonComponent className="w-full" onClick={handleClose}>
               Go back
             </ButtonComponent>
           </div>

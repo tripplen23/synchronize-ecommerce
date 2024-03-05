@@ -22,9 +22,10 @@ const Layout = () => {
   };
 
   return (
-    <div className="layout">
+    <div className="layout font-orbitron">
       <div className=" bg-light w-full min-h-screen dark:bg-dark">
         <Header handleShow={handleShow} />
+
         <main className="dark:text-light light:text-dark">
           <Outlet />
         </main>

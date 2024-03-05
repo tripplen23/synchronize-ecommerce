@@ -1,10 +1,10 @@
 import React from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/utils/hooks";
 import { Link, useNavigate } from "react-router-dom";
-import SpinnerComponent from "../../components/reusable/SpinnerComponent/SpinnerComponent";
+
 import ButtonComponent from "../../components/reusable/ButtonComponent/ButtonComponent";
 import { MdArrowBack, MdCheck, MdDelete } from "react-icons/md";
-import { BiPurchaseTag } from "react-icons/bi";
+
 import { TbTruckReturn } from "react-icons/tb";
 import {
   cartReset,
@@ -12,9 +12,11 @@ import {
   decreaseQuantity,
   deleteItemFromCart,
 } from "../../redux/features/cart/cartSlice";
+import { motion } from "framer-motion";
+import TransitionEffect from "../../components/reusable/TransitionEffect/TransitionEffect";
 
 const Cart = () => {
-  const { cartItems, isLoading } = useAppSelector((state) => state.cart);
+  const { cartItems } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -23,10 +25,9 @@ const Cart = () => {
     0
   );
 
-  if (isLoading) return <SpinnerComponent />;
-
   return (
     <section className="section py-10 px-5">
+      <TransitionEffect />
       <div className="mainContainer flex flex-col md:flex-row justify-around mx-auto max-w-7xl">
         {cartItems.length ? (
           <div className="content grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -39,13 +40,21 @@ const Cart = () => {
                 >
                   <MdArrowBack className="icon" />
                 </ButtonComponent>
-                <h1 className="text-2xl font-semibold text-gray-800">
+                <h1 className="text-2xl font-semibold text-gray-800 dark:text-light">
                   Shopping Bag
                 </h1>
               </div>
 
               {cartItems.map((item) => (
-                <div
+                <motion.div
+                  transition={{
+                    ease: "easeInOut",
+                    duration: 0.4,
+                  }}
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.1)",
+                  }}
                   key={item.product.id}
                   className="cartCardWrapper border rounded-lg overflow-hidden shadow-lg bg-white"
                 >
@@ -53,7 +62,7 @@ const Cart = () => {
                     to={`/products/${item.product.id}`}
                     className="cartCartContainer flex items-center gap-4 p-4"
                   >
-                    <div className="w-20 h-20 overflow-hidden">
+                    <div className="w-1/6 flex-shrink-0">
                       <img
                         src={item.product.image}
                         alt={item.product.title}
@@ -85,7 +94,7 @@ const Cart = () => {
                       >
                         -
                       </ButtonComponent>
-                      <div className="text-xl font-semibold">
+                      <div className="text-xl font-semibold dark:text-dark">
                         {item.quantity}
                       </div>
                       <ButtonComponent
@@ -104,7 +113,7 @@ const Cart = () => {
                       <MdDelete className="icon" />
                     </ButtonComponent>
                   </div>
-                </div>
+                </motion.div>
               ))}
 
               {/* Reset cart */}
@@ -117,26 +126,33 @@ const Cart = () => {
             </div>
             {/* Cart Right */}
             <div className="cartRight mt-16">
-              <div className="coupon bg-white border rounded-lg p-6 shadow-lg">
-                <h2 className="text-lg font-semibold mb-4">Coupons</h2>
+              <div className="coupon bg-light border rounded-lg p-6 shadow-lg mb-5">
+                <h2 className="text-lg font-semibold mb-4 dark:text-dark">
+                  Coupons
+                </h2>
                 <div className="couponContent flex items-center gap-4">
-                  <BiPurchaseTag className="icon" />
                   <div className="flex-grow">
-                    <h3 className="text-base font-medium text-gray-800">
-                      Apply Coupons
-                    </h3>
-                    <ButtonComponent className="button">Apply</ButtonComponent>
+                    <div className="relative mt-1">
+                      <input
+                        type="text"
+                        className="block w-96 py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        placeholder="Enter coupon code"
+                      />
+                      <ButtonComponent className="button absolute top-0 right-10 h-full px-4 py-2">
+                        Apply
+                      </ButtonComponent>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="priceDetails bg-white border rounded-lg p-6 shadow-lg">
+              <div className="priceDetails bg-white border rounded-lg p-6 shadow-lg dark:text-dark">
                 <h2 className="text-lg font-semibold mb-4">Price Details</h2>
                 <div className="priceContent flex justify-between">
-                  <div className="title">Total MRP</div>
+                  <div className="title">Total price</div>
                   <div className="price">€{totalPrice.toFixed(2)}</div>
                 </div>
                 <div className="priceContent flex justify-between">
-                  <div className="title">Platform fee</div>
+                  <div className="title">Shiping cost</div>
                   <div className="price">FREE</div>
                 </div>
                 <div className="totalContent flex justify-between items-center mt-4">
@@ -154,8 +170,9 @@ const Cart = () => {
             </div>
           </div>
         ) : (
-          <div className="noCartItems text-center text-gray-600 text-lg">
-            No Items Here
+          <div className="noCartItems text-center  flex flex-col">
+            <p className="text-gray-600 text-lg mb-5">No Items Here </p>
+            <ButtonComponent to="/catalog" children="Shop Now" />
           </div>
         )}
       </div>

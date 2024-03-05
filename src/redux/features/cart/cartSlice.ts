@@ -175,9 +175,9 @@ export const cartSlice = createSlice({
       (state: CartState, action: PayloadAction<number>) => {
         state.isLoading = false;
         state.isSuccess = true;
-        const cartItemId = action.payload;
+
         const updatedCart = state.cartItems.filter(
-          (item) => item.product.id !== cartItemId
+          (item) => item.product.id !== action.payload
         );
         state.cartItems = updatedCart;
         state.totalItems = state.cartItems.reduce(
