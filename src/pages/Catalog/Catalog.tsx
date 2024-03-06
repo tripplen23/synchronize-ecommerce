@@ -95,7 +95,7 @@ const Catalog = () => {
             value={sortByPrice}
             className="py-2 px-4 rounded-lg bg-light dark:bg-dark dark:text-light border-4 border-gray-600 text-gray-800 appearance-none cursor-pointer hover:border-gray-400 focus:outline-none focus:border-primary "
           >
-            <option disabled selected hidden>
+            <option selected hidden>
               Sort By Price
             </option>
             <option value="asc">Low to high</option>
