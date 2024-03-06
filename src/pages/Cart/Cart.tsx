@@ -90,7 +90,7 @@ const Cart = () => {
                     <div className="cartCardRightWrapper flex items-center gap-4">
                       <ButtonComponent
                         className="button"
-                        onClick={() => dispatch(decreaseQuantity(item.product))}
+                        onClick={() => dispatch(decreaseQuantity(item.product.id))}
                       >
                         -
                       </ButtonComponent>
@@ -99,7 +99,7 @@ const Cart = () => {
                       </div>
                       <ButtonComponent
                         className="button"
-                        onClick={() => dispatch(increaseQuantity(item.product))}
+                        onClick={() => dispatch(increaseQuantity(item.product.id))}
                       >
                         +
                       </ButtonComponent>

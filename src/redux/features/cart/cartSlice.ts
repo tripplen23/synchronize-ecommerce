@@ -60,9 +60,9 @@ export const deleteItemFromCart = createAsyncThunk(
 // TODO: Decrease quantity
 export const decreaseQuantity = createAsyncThunk(
   "cart/decrease",
-  async (productInCart: ProductType, thunkAPI) => {
+  async (cartId: number, thunkAPI) => {
     try {
-      return await cartService.decreaseQuantity(productInCart);
+      return await cartService.decreaseQuantity(cartId);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -72,9 +72,9 @@ export const decreaseQuantity = createAsyncThunk(
 // TODO: Increase quantity
 export const increaseQuantity = createAsyncThunk(
   "cart/increase",
-  async (productInCart: ProductType, thunkAPI) => {
+  async (cartId: number, thunkAPI) => {
     try {
-      return await cartService.increaseQuantity(productInCart);
+      return await cartService.increaseQuantity(cartId);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
