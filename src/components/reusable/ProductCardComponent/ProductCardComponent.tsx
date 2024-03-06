@@ -5,7 +5,6 @@ import { useAppDispatch } from "../../../redux/utils/hooks";
 import { CartItemType } from "../../../misc/cartType";
 import { addToCart } from "../../../redux/features/cart/cartSlice";
 import { motion } from "framer-motion";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import SpinnerComponent from "../SpinnerComponent/SpinnerComponent";
 import { CgShoppingBag } from "react-icons/cg";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
@@ -121,7 +120,7 @@ const ProductCardComponent: FC<ProductCardComponentProps> = ({
         <motion.button
           onClick={() => addToCartHandler()}
           whileHover={{ scale: 1.1 }}
-          className="bg-gradient-to-r from-purple-300 to-primary px-4 py-1 rounded-full text-white text-sm font-semibold text-white font-bold py-2 px-4 rounded-full w-full"
+          className="bg-gradient-to-r from-purple-300 to-primary rounded-full text-white text-sm font-semibold py-2 px-4 w-full"
         >
           {isLoadingProduct ? (
             <SpinnerComponent className="h-4 w-4" />
