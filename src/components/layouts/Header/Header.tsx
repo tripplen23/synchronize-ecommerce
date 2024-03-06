@@ -100,7 +100,7 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
         <button className={burgerStyles} onClick={handleClickBurger}>
           <span
             className={`bg-dark dark:bg-light transition-all duration-300 ease-out block h-0.5 w-6 rounded-sm ${
-              isOpenBurger ? "rotate-45 translate-y-1" : "-translate-y-0.5"
+              isOpenBurger ? "opacity-0" : "opacity-100"
             }`}
           ></span>
           <span
@@ -110,7 +110,7 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
           ></span>
           <span
             className={`bg-dark dark:bg-light transition-all duration-300 ease-out block h-0.5 w-6 rounded-sm ${
-              isOpenBurger ? "-rotate-45 -translate-y-1" : "translate-y-0.5"
+              isOpenBurger ? "opacity-0" : "opacity-100"
             }`}
           ></span>
         </button>
