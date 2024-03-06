@@ -17,6 +17,15 @@ module.exports = withMT({
       primary: "#11AD99",
       primaryLight: "#58E6D9", // 80,230,217
     },
+    screens: {
+      smPhone: { max: "479px" },
+      ipadPro: { max: "1024px" },
+      xlDevice: { max: "1290px" },
+      ipadMini: { max: "820px" },
+      surfaceDuo: { max: "540px" },
+      surfacePro: { min: "853px" },
+    },
   },
+
   plugins: [],
 });

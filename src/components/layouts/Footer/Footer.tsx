@@ -16,10 +16,10 @@ const Footer = () => {
           <span className="text-center lg:text-left text-gray-600 dark:text-gray-400">
             Synchronize {new Date().getFullYear()} &copy; All Rights Reserved.
           </span>
-          <div className="flex flex-col items-center lg:items-start">
-            <div className="flex items-center mb-4 lg:mb-0">
+          <div className="flex flex-col items-center lg:items-start smPhone:mt-10">
+            <div className="flex items-center mb-4 lg:mb-0 smPhone:hidden">
               Build With{" "}
-              <span className="text-primary text-2xl px-1">&#9825;</span>{" "}
+              <span className="text-primary text-2xl px-1 ">&#9825;</span>{" "}
               by&nbsp;
               <a
                 href="https://github.com/tripplen23"
@@ -73,7 +73,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          <div className="help-links">
+          <div className="help-links ipadPro:hidden">
             <ul className="nav flex flex-wrap gap-2 lg:flex-col lg:gap-1">
               <li>
                 <Link

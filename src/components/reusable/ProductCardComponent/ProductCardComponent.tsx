@@ -87,7 +87,13 @@ const ProductCardComponent: FC<ProductCardComponentProps> = ({
       {/* Product Image */}
       <div className="flex justify-center">
         <Link to={`/products/${String(id)}`}>
-          <img className="object-contain h-64 w-full" src={image} alt={title} />
+          <div className="w-full h-64 relative">
+            <img
+              className="object-contain w-full h-full rounded-3xl"
+              src={image}
+              alt={title}
+            />
+          </div>
         </Link>
       </div>
 

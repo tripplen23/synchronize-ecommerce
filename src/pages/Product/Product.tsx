@@ -90,14 +90,16 @@ const Product = () => {
 
             {/* Right side */}
             <div>
-              <h2 className="text-3xl font-semibold mb-4">{product.title}</h2>
-              <p className="text-gray-800 dark:text-gray-500 mb-6">
+              <h2 className="text-3xl smPhone:text-xl font-semibold mb-4">
+                {product.title}
+              </h2>
+              <p className="text-gray-800 dark:text-gray-500 mb-6 ipadMini:text-sm">
                 {product.description}
               </p>
               <div className="mb-6">
                 <h3 className="text-xl font-semibold mb-2">Size:</h3>
 
-                <div className="flex gap-2">
+                <div className="flex smPhone:grid ipadMini:grid grid-cols-2 gap-2">
                   {sizeData?.map((item, index) => (
                     <label
                       key={index}

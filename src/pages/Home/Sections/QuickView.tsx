@@ -37,12 +37,14 @@ const QuickView = () => {
 
   return (
     <section className="quickview-section bg-gray-100 py-12 dark:bg-gray-900 ">
-      <div className="container mx-auto">
-        <h2 className="text-3xl font-bold text-gray dark:text-light-800 mb-6">
+      <div className="container mx-auto ">
+        <h2 className="flex text-3xl font-bold text-gray dark:text-light-800 mb-6 smPhone:justify-center">
           Quick View
         </h2>
-        <div className="category-container flex flex-wrap gap-4 items-center justify-between mb-8">
-          <div className="buttons flex space-x-4">
+
+        <div className="category-container flex flex-wrap smPhone:flex-col gap-4 items-center justify-between mb-8">
+          {/* Category radio */}
+          <div className="buttons smPhone:grid grid-cols-2 smPhone:gap-5 flex lg:space-x-4">
             {categoryData?.map((item) => (
               <div key={item.value} className="button">
                 <input
@@ -66,6 +68,8 @@ const QuickView = () => {
               </div>
             ))}
           </div>
+
+          {/* View more */}
           <Link
             to={`/catalog/${String(selectedCategory)}`}
             className="view-all flex items-center space-x-2 text-primary hover:text-pink-800"
