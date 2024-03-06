@@ -62,14 +62,14 @@ const CartProduct: FC<CartProdutProps> = ({ item, onClick }) => {
         <div className="cartCardRightWrapper flex items-center gap-4">
           <ButtonComponent
             className="button"
-            onClick={() => dispatch(decreaseQuantity(item.product))}
+            onClick={() => dispatch(decreaseQuantity(item.product.id))}
           >
             -
           </ButtonComponent>
           <div className="text-xl font-semibold">{item.quantity}</div>
           <ButtonComponent
             className="button"
-            onClick={() => dispatch(increaseQuantity(item.product))}
+            onClick={() => dispatch(increaseQuantity(item.product.id))}
           >
             +
           </ButtonComponent>

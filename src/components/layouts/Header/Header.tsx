@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LogoComponent from "../../reusable/LogoComponent/LogoComponent";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,64 +11,14 @@ import { SiSuperuser } from "react-icons/si";
 import CartIcon from "./CartIcon/CartIcon";
 import { useAppDispatch, useAppSelector } from "../../../redux/utils/hooks";
 import { logout } from "../../../redux/features/auth/authSlice";
+import {
+  CustomButtonLink,
+  CustomLink,
+} from "../../reusable/CustomNavComponents/CustomNavComponents";
 
 interface HeaderProps {
   handleShow: () => void;
 }
-
-const CustomLink = ({
-  to,
-  title,
-  className = "",
-}: {
-  to: string;
-  title: string;
-  className: string;
-}) => {
-  return (
-    <NavLink to={to} className={`${className} relative group`}>
-      {title}
-      <span
-        className={`h-[1px] inline-block w-0 bg-dark absolute left-0 -bottom-0.5 group-hover:w-full transition-[width] ease duration-300 dark:bg-light `}
-      >
-        &nbsp;
-      </span>
-    </NavLink>
-  );
-};
-
-const CustomButtonLink = ({
-  to,
-  title,
-  className = "",
-  toggle,
-}: {
-  to: string;
-  title: string;
-  className: string;
-  toggle: any;
-}) => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    toggle();
-    navigate(to);
-  };
-
-  return (
-    <button
-      className={`${className} relative group text-light dark:text-dark my-2`}
-      onClick={handleClick}
-    >
-      {title}
-      <span
-        className={`h-[1px] inline-block w-0 bg-light absolute left-0 -bottom-0.5 group-hover:w-full transition-[width] ease duration-300 dark:bg-dark `}
-      >
-        &nbsp;
-      </span>
-    </button>
-  );
-};
 
 const Header: React.FC<HeaderProps> = ({ handleShow }) => {
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -119,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
   // TODO: Constants for styling
   const navStyles = `${
     hasScrolled
-      ? " fixed top-0 left-0 w-full z-50 ipadPro:pb-12 dark:text-light text-dark dark:bg-dark bg-gray-500 bg-opacity-60 text-light"
+      ? " fixed top-0 left-0 w-full z-50 ipadPro:pb-12 bg-gray-700 bg-opacity-60 text-light"
       : ""
   } w-full px-32 py-8 font-medium flex item-center justify-between dark:text-light transition-all duration-300`;
 
@@ -132,6 +81,8 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
   const burgerStyles = `flex-col justify-center items-center xl:hidden flex absolute left-[10%] translate-x-[-50%] top-10 `;
 
   const laptopMenuStyles = `w-full justify-between items-center xlDevice:hidden lg:flex`;
+
+  const iconStyles = `w-6 mx-3`;
 
   const otherDevicesMenuStyles = `min-w-[70vw] flex flex-col justify-between z-30 items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark/75 dark:bg-light/75 dark:text-dark text-light rounded-lg backdrop-blur-md py-32 xl:hidden`;
 
@@ -189,7 +140,7 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
             <motion.div
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.9 }}
-              className="w-6 mx-3"
+              className={iconStyles}
             >
               <CartIcon handleShow={handleShow} />
             </motion.div>
@@ -200,14 +151,14 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
                   href="/admin"
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.9 }}
-                  className="w-6 mx-3"
+                  className={iconStyles}
                 >
                   <SiSuperuser />
                 </motion.a>
                 <motion.button
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.9 }}
-                  className="w-6 mx-3"
+                  className={iconStyles}
                   onClick={() => logoutHandler()}
                 >
                   <MdLogout />
@@ -220,7 +171,7 @@ const Header: React.FC<HeaderProps> = ({ handleShow }) => {
                   href="/login"
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.9 }}
-                  className="w-6 mx-3"
+                  className={iconStyles}
                 >
                   <IoMdLogIn />
                 </motion.a>

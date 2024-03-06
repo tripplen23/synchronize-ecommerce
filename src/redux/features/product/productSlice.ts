@@ -107,6 +107,32 @@ export const updateProduct = createAsyncThunk(
   }
 );
 
+// TODO: Sort products by price
+export const sortProductsByPrice = createAsyncThunk(
+  "products/sortByPrice",
+  async (sortOrder: "asc" | "desc", thunkAPI) => {
+    try {
+      const state = thunkAPI.getState() as { product: ProductState };
+      const { products } = state.product;
+
+      let sortedProducts: ProductType[] = [];
+
+      if (sortOrder === "asc") {
+        sortedProducts = products
+          .slice()
+          .sort((a: ProductType, b: ProductType) => a.price - b.price); // Sort low to high
+      } else if (sortOrder === "desc") {
+        sortedProducts = products
+          .slice()
+          .sort((a: ProductType, b: ProductType) => b.price - a.price); // Sort high to low
+      }
+      return sortedProducts;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const productSlice = createSlice({
   name: "products",
   initialState,
@@ -272,6 +298,7 @@ const productSlice = createSlice({
         status: STATUS.ERROR,
       };
     });
+
     // TODO: Reducer's cases for updateProduct
     builder.addCase(updateProduct.pending, (state: ProductState) => {
       return {
@@ -306,6 +333,40 @@ const productSlice = createSlice({
         status: STATUS.ERROR,
       };
     });
+
+    // TODO: Reducer's cases for sortProductsByPrice
+    builder.addCase(sortProductsByPrice.pending, (state: ProductState) => {
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+        status: STATUS.LOADING,
+      };
+    });
+    builder.addCase(
+      sortProductsByPrice.fulfilled,
+      (state: ProductState, action: PayloadAction<ProductType[]>) => {
+        return {
+          ...state,
+          products: action.payload,
+          isLoading: false,
+          isSuccess: true,
+          error: null,
+          status: STATUS.SUCCESS,
+        };
+      }
+    );
+    builder.addCase(
+      sortProductsByPrice.rejected,
+      (state: ProductState, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          error: action.error.message ?? "error",
+          status: STATUS.ERROR,
+        };
+      }
+    );
   },
 });
 

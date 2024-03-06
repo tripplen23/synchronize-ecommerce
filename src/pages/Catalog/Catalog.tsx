@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/utils/hooks";
 import {
   getCategory,
   getProducts,
+  sortProductsByPrice,
 } from "../../redux/features/product/productSlice";
 import ProductCardComponent from "../../components/reusable/ProductCardComponent/ProductCardComponent";
 import SpinnerComponent from "../../components/reusable/SpinnerComponent/SpinnerComponent";
@@ -10,6 +11,7 @@ import { ROUTES } from "../../constants/Route";
 import { useNavigate, useParams } from "react-router-dom";
 import { categoryData } from "../../data/categoryData";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import ButtonComponent from "../../components/reusable/ButtonComponent/ButtonComponent";
 import GoToTopComponent from "../../components/reusable/GoToTopComponent/GoToTopComponent";
 import TransitionEffect from "../../components/reusable/TransitionEffect/TransitionEffect";
@@ -20,7 +22,10 @@ const Catalog = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  // Pagination
+  // sortByPrice state:
+  const [sortByPrice, setSortByPrice] = useState("");
+
+  // Pagination state:
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 4;
   const totalPages = Math.ceil(products.length / productsPerPage);
@@ -54,7 +59,7 @@ const Catalog = () => {
     ?.map((word) => word?.charAt(0)?.toUpperCase() + word?.slice(1))
     ?.join(" ");
 
-  // Pagination Logic
+  // TODO: Pagination Logic
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = products.slice(
@@ -66,6 +71,13 @@ const Catalog = () => {
     setCurrentPage(pageNumber);
   };
 
+  // TODO: sortProductsByPrice handler
+  const sortByPriceHandler = (event: any) => {
+    const sortOrder = event.target.value;
+    setSortByPrice(sortOrder);
+    dispatch(sortProductsByPrice(sortOrder));
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <TransitionEffect />
@@ -74,8 +86,22 @@ const Catalog = () => {
         <ButtonComponent onClick={() => navigate(-1)}>
           <MdArrowBack />
         </ButtonComponent>
-        <div></div>
-        <h2 className="text-3xl font-bold">{convertedString}</h2>
+
+        <div className="relative flex items-end flex-col justify-between mb-4">
+          <h2 className="text-3xl font-bold mb-2">{convertedString}</h2>
+          {/* Sort by price drop down */}
+          <select
+            onChange={sortByPriceHandler}
+            value={sortByPrice}
+            className="py-2 px-4 rounded-lg bg-light dark:bg-dark dark:text-light border-4 border-gray-600 text-gray-800 appearance-none cursor-pointer hover:border-gray-400 focus:outline-none focus:border-primary "
+          >
+            <option disabled selected hidden>
+              Sort By Price
+            </option>
+            <option value="asc">Low to high</option>
+            <option value="desc">High to Low</option>
+          </select>
+        </div>
       </div>
 
       {/* Products */}

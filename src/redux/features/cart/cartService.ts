@@ -32,21 +32,20 @@ const deleteItemFromCart = async (cartId: number) => {
   }
 };
 
-const decreaseQuantity = async (productInCart: ProductType) => {
+const decreaseQuantity = async (cartId: number) => {
   try {
-    await axiosConfig.post("carts", productInCart);
-    return productInCart;
+    const response = await axiosConfig.patch(`carts/${cartId}`);
+    return response.data;
   } catch (error) {
     console.error("Error decreasing item quantity in cart:", error);
     throw error;
   }
 };
 
-const increaseQuantity = async (productInCart: ProductType) => {
+const increaseQuantity = async (cartId: number) => {
   try {
-    await axiosConfig.post("carts", productInCart);
-
-    return productInCart;
+    const response = await axiosConfig.patch(`carts/${cartId}`);
+    return response.data;
   } catch (error) {
     console.error("Error increasing item quantity in cart:", error);
     throw error;
