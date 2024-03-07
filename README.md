@@ -2,9 +2,9 @@
 
 Synchronize project is a merchandise ecommerce where will be the base for selling fashion, jellewry products for Synchronize Recording Studio.
 
-The demo version is currently using the `https://fakestoreapi.com/` for placing the products in needed places with tech-stack for front-end included: TypeScript, React, React Router, Framer Motion, and tailwind.
+The demo version is currently using the [fakestoreapi](https://fakestoreapi.com/) for placing the products in needed places with tech-stack for front-end included: TypeScript, React, React Router, Framer Motion, and tailwind.
 
-Checkout the demo deployment via `https://synchronize-ecommerce-fcsi-jw0lzgav2.vercel.app/`
+Checkout the demo deployment via [Synchronize](https://synchronize-ecommerce-fcsi-jw0lzgav2.vercel.app/)
 
 ## Table of Contents
 
