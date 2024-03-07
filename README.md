@@ -60,21 +60,21 @@ Checkout the demo deployment via `https://synchronize-ecommerce-fcsi-jw0lzgav2.v
 
 - User authentication. (Optimize for Google login needed)
 
-  ![login-img](![alt text](image.png))
+![alt text](image.png)
 
 - Categories, sort product by price, product detail.
 
-  ![product-listing](![alt text](image-1.png))
-  ![product-detail](![alt text](image-2.png))
+![alt text](image-1.png)
+![alt text](image-2.png)
 
 - Shopping cart
 
-  ![shopping-cart](![alt text](image-3.png))
-  ![shopping-cart](![alt text](image-4.png))
+![alt text](image-3.png)
+![alt text](image-4.png)
 
 - Admin dashboard
 
-  ![admin](![alt text](image-5.png))
+![alt text](image-5.png)
 
 ### Architecture & Design
 
