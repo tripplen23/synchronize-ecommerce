@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../redux/utils/hooks";
 import { getUser, login } from "../../redux/features/auth/authSlice";
 import { motion } from "framer-motion";
-import SpinnerComponent from "../../components/reusable/SpinnerComponent/SpinnerComponent";
 import TransitionEffect from "../../components/reusable/TransitionEffect/TransitionEffect";
 import VanGoghImage from "../../assets/imgs/VanGoghImage.jpg"; // Import your Van Gogh image
 
@@ -27,7 +26,6 @@ const Login = () => {
 
   // TODO: Signin/Login handler
   const onSubmit = async (data: any) => {
-    console.log("Login data: ", data);
     const username = data.username as string;
     const password = data.password as string;
 
@@ -36,7 +34,6 @@ const Login = () => {
     if (login.fulfilled.match(resultAction)) {
       // Login was successful, navigate to Home page
       navigate("/");
-      console.log(user);
     } else if (login.rejected.match(resultAction)) {
       const error: any = resultAction.payload;
       console.error(

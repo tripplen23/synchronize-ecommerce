@@ -21,7 +21,6 @@ const Product = () => {
 
   const addToCartHandler = () => {
     setIsLoadingProduct(true);
-    console.log("Adding to cart...");
     const cartProduct: CartItemType = {
       quantity: 1,
       product: {

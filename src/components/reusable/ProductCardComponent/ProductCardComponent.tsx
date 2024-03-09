@@ -97,11 +97,11 @@ const ProductCardComponent: FC<ProductCardComponentProps> = ({
       </div>
 
       {/* Product Details */}
-      <div className="px-6 py-4 flex flex-col">
-        <div className="font-bold text-xl mb-2 text-gray-800 dark:text-white">
+      <div className="px-6 py-4 flex flex-col items-center">
+        <div className="font-bold text-xl mb-2 text-gray-800 dark:text-white xl:h-10">
           {title}
         </div>
-        <div className="flex items-center mb-2">
+        <div className="flex items-center mb-2 xl:mt-[8rem]">
           {rating && renderRatingStars(rating)}
         </div>
         <p className="text-gray-700 text-base mb-2 dark:text-gray-300">

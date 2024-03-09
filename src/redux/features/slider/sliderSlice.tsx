@@ -16,8 +16,6 @@ export const sliderSlice = createSlice({
   initialState,
   reducers: {
     nextSlide(state: SliderState, action: PayloadAction<number>) {
-      //console.log("action", action.payload);
-      //console.log("state", state);
       state.value = action.payload > state.length - 1 ? 0 : action.payload;
     },
     prevSlide(state: SliderState, action: PayloadAction<number>) {
@@ -25,7 +23,6 @@ export const sliderSlice = createSlice({
     },
     dotSlide(state, action) {
       const slide = action.payload;
-      //console.log("dot", slide);
       state.value = slide;
     },
   },

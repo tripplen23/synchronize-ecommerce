@@ -16,7 +16,6 @@ Checkout the demo deployment via [Synchronize](https://synchronize-ecommerce-fcs
   - Installation
   - Setting up the Environment
 
-- Usage
 - Features
 - Architecture & Design
 
@@ -27,7 +26,6 @@ Checkout the demo deployment via [Synchronize](https://synchronize-ecommerce-fcs
 - Testing
 - Deployment
 - Contributing
-- License
 
 ## Getting Started
 
@@ -44,11 +42,9 @@ Checkout the demo deployment via [Synchronize](https://synchronize-ecommerce-fcs
 
 ### Installation
 
-- Git command: Git clone https://github.com/tripplen23/fs17-Frontend-project.git
+- Git command: Git clone https://github.com/tripplen23/synchronize-ecommerce.git
 - Navigate to the project directory: cd fs17-Frontend-project.
 - Install the project dependencies: npm i or yarn.
-
-## Usage
 
 ### Scripts
 
@@ -56,7 +52,7 @@ Checkout the demo deployment via [Synchronize](https://synchronize-ecommerce-fcs
 - Build the production-ready bundle: npm run build or yarn build
 - Run the tests: npm test or yarn test
 
-### Features
+## Features
 
 - User authentication. (Optimize for Google login needed)
 
@@ -76,9 +72,9 @@ Checkout the demo deployment via [Synchronize](https://synchronize-ecommerce-fcs
 
 ![alt text](image-5.png)
 
-### Architecture & Design
+## Architecture & Design
 
-#### Folder Structure
+### Folder Structure
 
 ```sh
 └── /src
@@ -134,18 +130,20 @@ Checkout the demo deployment via [Synchronize](https://synchronize-ecommerce-fcs
     └── shared                           // Directory for mock server for testing purpose.
 ```
 
-#### Data Flow
+### Data Flow
 
-- The application follows a Redux architecture for managing the state. Actions are dispatched from components, which trigger corresponding reducers to update the state. The updated state is then reflected in the UI using React's re-rendering mechanism.
+- The main logic of the app is implemented in the slice files (for example: productSlice, cartSlice, authSlice, etc). The slice files are connected to the service files (for example: productService, cartService and authService, etc) which play the role as the bridges between the API and the redux store. The redux store after being processed all the logic with the API will be implemented in the application through the the hooks of useAppSelector for selecting the state and the useAppDispatch for triggering the state to the redux store.
 
-### Testing
+![alt text](image-6.png)
+
+## Testing
 
 - Testing libraries/frameworks: Jest, React Testing Library
 - Run tests using the command npm test or yarn test.
 - The tests are structured into unit tests with reducers, covering different aspects of the application.
-- Unit testing progress is still in the progress.
+- For further development, this is neccessary to implement more test cases.
 
-### Deployment
+## Deployment
 
 - To deploy the project to a server, follow these general steps:
 

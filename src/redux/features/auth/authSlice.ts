@@ -29,7 +29,6 @@ export const login = createAsyncThunk(
   "auth/login",
   async (user: LoginType, thunkAPI) => {
     try {
-      console.log("Login successfully");
       return await authService.login({
         username: String(user.username),
         password: String(user.password),
@@ -64,7 +63,6 @@ export const getUser = createAsyncThunk(
 // TODO: Logout
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    console.log("Log out successfully!");
     return await authService.logout();
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -89,7 +87,6 @@ const authSlice = createSlice({
     builder.addCase(
       login.fulfilled,
       (state: AuthState, action: PayloadAction<string>) => {
-        console.log("Login action payload", action.payload);
         localStorage.setItem("loginToken", JSON.stringify(action.payload));
         return {
           ...state,
@@ -121,10 +118,6 @@ const authSlice = createSlice({
       getUser.fulfilled,
       (state: AuthState, action: PayloadAction<UserDetailsType>) => {
         localStorage.setItem("userDetails", JSON.stringify(action.payload));
-        console.log(
-          "user's first name:",
-          JSON.stringify(action.payload?.name.firstname)
-        );
         return {
           ...state,
           isLoading: false,
