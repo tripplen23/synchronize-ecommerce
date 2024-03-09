@@ -56,21 +56,21 @@ Checkout the demo deployment via [Synchronize](https://synchronize-ecommerce-fcs
 
 - User authentication. (Optimize for Google login needed)
 
-![alt text](image.png)
+![alt text](./readmeImg/image.png)
 
 - Categories, sort product by price, product detail.
 
-![alt text](image-1.png)
-![alt text](image-2.png)
+![alt text](./readmeImg/image-1.png)
+![alt text](./readmeImg/image-2.png)
 
 - Shopping cart
 
-![alt text](image-3.png)
-![alt text](image-4.png)
+![alt text](./readmeImg/image-3.png)
+![alt text](./readmeImg/image-4.png)
 
 - Admin dashboard
 
-![alt text](image-5.png)
+![alt text](./readmeImg/image-5.png)
 
 ## Architecture & Design
 
@@ -134,7 +134,7 @@ Checkout the demo deployment via [Synchronize](https://synchronize-ecommerce-fcs
 
 - The main logic of the app is implemented in the slice files (for example: productSlice, cartSlice, authSlice, etc). The slice files are connected to the service files (for example: productService, cartService and authService, etc) which play the role as the bridges between the API and the redux store. The redux store after being processed all the logic with the API will be implemented in the application through the the hooks of useAppSelector for selecting the state and the useAppDispatch for triggering the state to the redux store.
 
-![alt text](image-6.png)
+![alt text](./readmeImg/image-6.png)
 
 ## Testing
 
